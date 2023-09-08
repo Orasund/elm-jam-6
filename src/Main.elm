@@ -3,9 +3,10 @@ module Main exposing (..)
 import Browser
 import Config
 import Game exposing (Game)
+import Game.Level1
 import Html exposing (Html)
 import Html.Attributes
-import Layout
+import Level exposing (Button)
 import Overlay exposing (Overlay(..))
 import Random exposing (Generator, Seed)
 import View
@@ -23,6 +24,7 @@ type Msg
     = NewGame
     | SetOverlay (Maybe Overlay)
     | GotSeed Seed
+    | SetState Int
 
 
 apply : Model -> Generator Model -> Model
@@ -60,6 +62,15 @@ setOverlay maybeOverlay model =
     { model | overlay = maybeOverlay }
 
 
+setState : Int -> Model -> Model
+setState i model =
+    { model
+        | game =
+            model.game
+                |> Game.applyButton i
+    }
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -75,6 +86,11 @@ update msg model =
 
         SetOverlay maybeOverlay ->
             model |> setOverlay maybeOverlay |> withNoCmd
+
+        SetState i ->
+            model
+                |> setState i
+                |> withNoCmd
 
 
 viewOverlay : Model -> Overlay -> Html Msg
@@ -94,7 +110,7 @@ view :
 view model =
     let
         content =
-            Html.text ""
+            Game.Level1.toHtml { onPress = SetState } model.game.level
     in
     { title = Config.title
     , body =
@@ -105,7 +121,7 @@ view model =
             |> Maybe.map (viewOverlay model)
             |> Maybe.map List.singleton
             |> Maybe.withDefault []
-            |> (::) (content |> Layout.el [ Html.Attributes.class "content" ])
+            |> (::) (content |> Html.div [ Html.Attributes.class "content" ])
             |> Html.div
                 [ Html.Attributes.style "width" (String.fromFloat Config.screenMinWidth ++ "px")
                 , Html.Attributes.style "height" (String.fromFloat Config.screenMinHeight ++ "px")

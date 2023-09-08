@@ -52,7 +52,7 @@ body {
 }
 
 .content {
-    padding: var(--space);
+    position: relative;
 }
 
 button {

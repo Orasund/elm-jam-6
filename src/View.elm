@@ -20,6 +20,15 @@ viewportMeta =
         []
 
 
+binaryColor : Bool -> String
+binaryColor bool =
+    if bool then
+        "var(--primary-color)"
+
+    else
+        "var(--secondary-color)"
+
+
 stylesheet : Html msg
 stylesheet =
     --In-Elm Stylesheet is usually easier to load by itch.io
