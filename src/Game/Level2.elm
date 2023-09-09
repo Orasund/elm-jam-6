@@ -58,67 +58,61 @@ toHtml args =
       ]
         |> View.Level.area
             []
-            { transition = False }
+            { transition = False
+            , visible = Set.member 1 args.areas
+            , center = ( 75, 275 )
+            }
     , secondSquare Yellow
-    , toggle []
+    , toggle
         { color = backColor
         , areas = args.areas
         , area = 0
         , onPress = args.onPress
         , transition = False
+        , visible = True
+        , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
         }
     , toggle
-        (if frontColor == Blue then
-            [ "circle("
-                ++ (if transitiningFirst then
-                        String.fromFloat Config.screenMinHeight
-
-                    else
-                        String.fromFloat 0
-                   )
-                ++ "px at 200px 175px)"
-                |> Html.Attributes.style "clip-path"
-            ]
-
-         else
-            [ "circle("
-                ++ (if transitiningFirst then
-                        String.fromFloat Config.screenMinHeight
-
-                    else
-                        String.fromFloat 0
-                   )
-                ++ "px at 200px 525px)"
-                |> Html.Attributes.style "clip-path"
-            ]
-        )
         { color = frontColor
         , areas = args.areas
         , area = 0
         , onPress = args.onPress
         , transition = transitiningFirst
+        , visible = transitiningFirst
+        , center =
+            if frontColor == Blue then
+                ( 200, 175 )
+
+            else
+                ( 200, 525 )
         }
     ]
 
 
-toggle : List (Attribute msg) -> { color : Color, area : Int, areas : Set Int, onPress : Int -> msg, transition : Bool } -> Html msg
-toggle attrs args =
+toggle : { color : Color, area : Int, areas : Set Int, onPress : Int -> msg, transition : Bool, visible : Bool, center : ( Int, Int ) } -> Html msg
+toggle args =
     case args.color of
         Blue ->
             [ secondCircle Blue
             , path Blue
             , firstButton Blue (args.onPress args.area)
             ]
-                |> View.Level.area attrs
-                    { transition = args.transition }
+                |> View.Level.area []
+                    { transition = args.transition
+                    , visible = args.visible
+                    , center = args.center
+                    }
 
         Yellow ->
             [ secondButton Yellow (args.onPress args.area)
             , path Yellow
             , firstCircle Yellow
             ]
-                |> View.Level.area attrs
-                    { transition = args.transition }
+                |> View.Level.area []
+                    { transition = args.transition
+                    , visible = args.visible
+                    , center = args.center
+                    }
 
 
 firstButton : Color -> msg -> Html msg

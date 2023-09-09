@@ -1,5 +1,6 @@
 module View.Level exposing (..)
 
+import Config
 import Game exposing (Color)
 import Html exposing (Attribute, Html)
 import Html.Attributes
@@ -19,21 +20,37 @@ base bool =
         Layout.none
 
 
-area : List (Attribute msg) -> { transition : Bool } -> List (Html msg) -> Html msg
+area : List (Attribute msg) -> { transition : Bool, center : ( Int, Int ), visible : Bool } -> List (Html msg) -> Html msg
 area attrs args =
+    let
+        ( x, y ) =
+            args.center
+    in
     Html.div
-        ([ Html.Attributes.style "position" "absolute"
+        ((if args.transition then
+            [ Html.Attributes.class "areaTransition"
+            ]
 
-         --, Html.Attributes.style "z-index" "1"
-         , Html.Attributes.style "height" "100%"
-         , Html.Attributes.style "width" "100%"
-         ]
-            ++ (if args.transition then
-                    [ Html.Attributes.class "areaTransition" ]
+          else
+            []
+         )
+            ++ [ Html.Attributes.style "position" "absolute"
+               , Html.Attributes.style "height" "100%"
+               , Html.Attributes.style "width" "100%"
+               , "circle("
+                    ++ (if args.visible then
+                            String.fromFloat Config.screenMinHeight
 
-                else
-                    []
-               )
+                        else
+                            String.fromFloat 0
+                       )
+                    ++ "px at "
+                    ++ String.fromInt x
+                    ++ "px "
+                    ++ String.fromInt y
+                    ++ "px)"
+                    |> Html.Attributes.style "clip-path"
+               ]
             ++ attrs
         )
 

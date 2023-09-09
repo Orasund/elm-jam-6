@@ -27,39 +27,30 @@ toHtml args =
         |> View.Level.area
             [ Html.Attributes.style "z-index" "1"
             ]
-            { transition = False }
+            { transition = False
+            , visible = True
+            , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
+            }
     , [ secondArea Yellow
       , path Yellow
       , secondButton Yellow (args.onPress 1)
       ]
         |> View.Level.area
             [ Html.Attributes.style "z-index" "2"
-            , "circle("
-                ++ (if Set.member 0 args.areas then
-                        String.fromFloat 0
-
-                    else
-                        String.fromFloat Config.screenMinHeight
-                   )
-                ++ "px at 200px 525px)"
-                |> Html.Attributes.style "clip-path"
             ]
-            { transition = args.transitioningArea == Just 0 }
+            { transition = args.transitioningArea == Just 0
+            , visible = Set.member 0 args.areas |> not
+            , center = ( 200, 525 )
+            }
     , [ View.Level.base Blue
       ]
         |> View.Level.area
             [ Html.Attributes.style "z-index" "3"
-            , "circle("
-                ++ (if Set.member 1 args.areas then
-                        String.fromFloat 0
-
-                    else
-                        String.fromFloat Config.screenMinHeight
-                   )
-                ++ "px at 200px 175px)"
-                |> Html.Attributes.style "clip-path"
             ]
-            { transition = args.transitioningArea == Just 1 }
+            { transition = args.transitioningArea == Just 1
+            , visible = Set.member 1 args.areas |> not
+            , center = ( 200, 175 )
+            }
     ]
 
 

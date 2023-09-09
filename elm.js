@@ -5354,23 +5354,32 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$core$String$fromFloat = _String_fromNumber;
+var $author$project$Config$screenMinHeight = 700;
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $author$project$View$Level$area = F2(
 	function (attrs, args) {
+		var _v0 = args.center;
+		var x = _v0.a;
+		var y = _v0.b;
 		return $elm$html$Html$div(
 			_Utils_ap(
-				_List_fromArray(
+				args.transition ? _List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-						A2($elm$html$Html$Attributes$style, 'height', '100%'),
-						A2($elm$html$Html$Attributes$style, 'width', '100%')
-					]),
+						$elm$html$Html$Attributes$class('areaTransition')
+					]) : _List_Nil,
 				_Utils_ap(
-					args.transition ? _List_fromArray(
+					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class('areaTransition')
-						]) : _List_Nil,
+							A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+							A2($elm$html$Html$Attributes$style, 'height', '100%'),
+							A2($elm$html$Html$Attributes$style, 'width', '100%'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'clip-path',
+							'circle(' + ((args.visible ? $elm$core$String$fromFloat($author$project$Config$screenMinHeight) : $elm$core$String$fromFloat(0)) + ('px at ' + ($elm$core$String$fromInt(x) + ('px ' + ($elm$core$String$fromInt(y) + 'px)'))))))
+						]),
 					attrs)));
 	});
 var $author$project$View$boolColor = function (bool) {
@@ -5548,7 +5557,6 @@ var $author$project$Game$Level1$firstButton = function (bool) {
 				$elm$html$Html$Attributes$class('font-size-big')
 			]));
 };
-var $elm$core$String$fromFloat = _String_fromNumber;
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
@@ -5594,6 +5602,7 @@ var $elm$core$Set$member = F2(
 		var dict = _v0.a;
 		return A2($elm$core$Dict$member, key, dict);
 	});
+var $elm$core$Basics$not = _Basics_not;
 var $author$project$Game$Level1$path = function (bool) {
 	return A2(
 		$Orasund$elm_layout$Layout$el,
@@ -5611,7 +5620,7 @@ var $author$project$Game$Level1$path = function (bool) {
 			]),
 		$Orasund$elm_layout$Layout$none);
 };
-var $author$project$Config$screenMinHeight = 700;
+var $author$project$Config$screenMinWidth = 400;
 var $author$project$Game$Level1$secondArea = function (bool) {
 	return A2(
 		$Orasund$elm_layout$Layout$el,
@@ -5650,7 +5659,11 @@ var $author$project$Game$Level1$toHtml = function (args) {
 				[
 					A2($elm$html$Html$Attributes$style, 'z-index', '1')
 				]),
-			{transition: false},
+			{
+				center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, ($author$project$Config$screenMinHeight / 2) | 0),
+				transition: false,
+				visible: true
+			},
 			_List_fromArray(
 				[
 					$author$project$Game$Level1$firstArea($author$project$Game$Blue),
@@ -5664,16 +5677,14 @@ var $author$project$Game$Level1$toHtml = function (args) {
 			$author$project$View$Level$area,
 			_List_fromArray(
 				[
-					A2($elm$html$Html$Attributes$style, 'z-index', '2'),
-					A2(
-					$elm$html$Html$Attributes$style,
-					'clip-path',
-					'circle(' + ((A2($elm$core$Set$member, 0, args.areas) ? $elm$core$String$fromFloat(0) : $elm$core$String$fromFloat($author$project$Config$screenMinHeight)) + 'px at 200px 525px)'))
+					A2($elm$html$Html$Attributes$style, 'z-index', '2')
 				]),
 			{
+				center: _Utils_Tuple2(200, 525),
 				transition: _Utils_eq(
 					args.transitioningArea,
-					$elm$core$Maybe$Just(0))
+					$elm$core$Maybe$Just(0)),
+				visible: !A2($elm$core$Set$member, 0, args.areas)
 			},
 			_List_fromArray(
 				[
@@ -5688,16 +5699,14 @@ var $author$project$Game$Level1$toHtml = function (args) {
 			$author$project$View$Level$area,
 			_List_fromArray(
 				[
-					A2($elm$html$Html$Attributes$style, 'z-index', '3'),
-					A2(
-					$elm$html$Html$Attributes$style,
-					'clip-path',
-					'circle(' + ((A2($elm$core$Set$member, 1, args.areas) ? $elm$core$String$fromFloat(0) : $elm$core$String$fromFloat($author$project$Config$screenMinHeight)) + 'px at 200px 175px)'))
+					A2($elm$html$Html$Attributes$style, 'z-index', '3')
 				]),
 			{
+				center: _Utils_Tuple2(200, 175),
 				transition: _Utils_eq(
 					args.transitioningArea,
-					$elm$core$Maybe$Just(1))
+					$elm$core$Maybe$Just(1)),
+				visible: !A2($elm$core$Set$member, 1, args.areas)
 			},
 			_List_fromArray(
 				[
@@ -5858,39 +5867,38 @@ var $author$project$Game$Level2$secondCircle = function (bool) {
 				A2($elm$html$Html$Attributes$style, 'left', '25%')
 			]));
 };
-var $author$project$Game$Level2$toggle = F2(
-	function (attrs, args) {
-		var _v0 = args.color;
-		if (_v0.$ === 'Blue') {
-			return A3(
-				$author$project$View$Level$area,
-				attrs,
-				{transition: args.transition},
-				_List_fromArray(
-					[
-						$author$project$Game$Level2$secondCircle($author$project$Game$Blue),
-						$author$project$Game$Level2$path($author$project$Game$Blue),
-						A2(
-						$author$project$Game$Level2$firstButton,
-						$author$project$Game$Blue,
-						args.onPress(args.area))
-					]));
-		} else {
-			return A3(
-				$author$project$View$Level$area,
-				attrs,
-				{transition: args.transition},
-				_List_fromArray(
-					[
-						A2(
-						$author$project$Game$Level2$secondButton,
-						$author$project$Game$Yellow,
-						args.onPress(args.area)),
-						$author$project$Game$Level2$path($author$project$Game$Yellow),
-						$author$project$Game$Level2$firstCircle($author$project$Game$Yellow)
-					]));
-		}
-	});
+var $author$project$Game$Level2$toggle = function (args) {
+	var _v0 = args.color;
+	if (_v0.$ === 'Blue') {
+		return A3(
+			$author$project$View$Level$area,
+			_List_Nil,
+			{center: args.center, transition: args.transition, visible: args.visible},
+			_List_fromArray(
+				[
+					$author$project$Game$Level2$secondCircle($author$project$Game$Blue),
+					$author$project$Game$Level2$path($author$project$Game$Blue),
+					A2(
+					$author$project$Game$Level2$firstButton,
+					$author$project$Game$Blue,
+					args.onPress(args.area))
+				]));
+	} else {
+		return A3(
+			$author$project$View$Level$area,
+			_List_Nil,
+			{center: args.center, transition: args.transition, visible: args.visible},
+			_List_fromArray(
+				[
+					A2(
+					$author$project$Game$Level2$secondButton,
+					$author$project$Game$Yellow,
+					args.onPress(args.area)),
+					$author$project$Game$Level2$path($author$project$Game$Yellow),
+					$author$project$Game$Level2$firstCircle($author$project$Game$Yellow)
+				]));
+	}
+};
 var $author$project$Game$Level2$toHtml = function (args) {
 	var transitiningFirst = _Utils_eq(
 		args.transitioningArea,
@@ -5911,7 +5919,11 @@ var $author$project$Game$Level2$toHtml = function (args) {
 			A3(
 			$author$project$View$Level$area,
 			_List_Nil,
-			{transition: false},
+			{
+				center: _Utils_Tuple2(75, 275),
+				transition: false,
+				visible: A2($elm$core$Set$member, 1, args.areas)
+			},
 			_List_fromArray(
 				[
 					$author$project$Game$Level2$firstSquare($author$project$Game$Yellow),
@@ -5922,26 +5934,26 @@ var $author$project$Game$Level2$toHtml = function (args) {
 					args.onPress(1))
 				])),
 			$author$project$Game$Level2$secondSquare($author$project$Game$Yellow),
-			A2(
-			$author$project$Game$Level2$toggle,
-			_List_Nil,
-			{area: 0, areas: args.areas, color: backColor, onPress: args.onPress, transition: false}),
-			A2(
-			$author$project$Game$Level2$toggle,
-			_Utils_eq(frontColor, $author$project$Game$Blue) ? _List_fromArray(
-				[
-					A2(
-					$elm$html$Html$Attributes$style,
-					'clip-path',
-					'circle(' + ((transitiningFirst ? $elm$core$String$fromFloat($author$project$Config$screenMinHeight) : $elm$core$String$fromFloat(0)) + 'px at 200px 175px)'))
-				]) : _List_fromArray(
-				[
-					A2(
-					$elm$html$Html$Attributes$style,
-					'clip-path',
-					'circle(' + ((transitiningFirst ? $elm$core$String$fromFloat($author$project$Config$screenMinHeight) : $elm$core$String$fromFloat(0)) + 'px at 200px 525px)'))
-				]),
-			{area: 0, areas: args.areas, color: frontColor, onPress: args.onPress, transition: transitiningFirst})
+			$author$project$Game$Level2$toggle(
+			{
+				area: 0,
+				areas: args.areas,
+				center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, ($author$project$Config$screenMinHeight / 2) | 0),
+				color: backColor,
+				onPress: args.onPress,
+				transition: false,
+				visible: true
+			}),
+			$author$project$Game$Level2$toggle(
+			{
+				area: 0,
+				areas: args.areas,
+				center: _Utils_eq(frontColor, $author$project$Game$Blue) ? _Utils_Tuple2(200, 175) : _Utils_Tuple2(200, 525),
+				color: frontColor,
+				onPress: args.onPress,
+				transition: transitiningFirst,
+				visible: transitiningFirst
+			})
 		]);
 };
 var $author$project$Game$Level2$def = {
@@ -5979,7 +5991,7 @@ var $author$project$Main$init = function (_v0) {
 			game: A2(
 				$elm$core$Maybe$withDefault,
 				$author$project$Game$empty,
-				$author$project$Level$toGame(2)),
+				$author$project$Level$toGame(1)),
 			overlay: $elm$core$Maybe$Nothing,
 			seed: $elm$random$Random$initialSeed(42),
 			transitioningArea: $elm$core$Maybe$Nothing
@@ -6561,7 +6573,6 @@ var $author$project$View$Overlay$gameEnd = A2(
 				'Thanks for playing!'),
 				A2($Orasund$elm_layout$Layout$text, _List_Nil, 'created by Lucas Payr')
 			])));
-var $author$project$Config$screenMinWidth = 400;
 var $elm$core$List$singleton = function (value) {
 	return _List_fromArray(
 		[value]);
