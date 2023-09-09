@@ -1,6 +1,5 @@
 module Level exposing (..)
 
-import Dict exposing (Dict)
 import Game exposing (Game, LevelDef)
 import Game.Level1
 import Game.Level2
@@ -21,12 +20,16 @@ fromInt int =
             Nothing
 
 
-toHtml : { onPress : Int -> msg } -> Int -> Set Int -> Maybe (List (Html msg))
-toHtml args int areas =
+toHtml : { onPress : Int -> msg, areas : Set Int, transitioningArea : Maybe Int } -> Int -> Maybe (List (Html msg))
+toHtml args int =
     fromInt int
         |> Maybe.map
             (\def ->
-                def.toHtml args areas
+                def.toHtml
+                    { onPress = args.onPress
+                    , areas = args.areas
+                    , transitioningArea = args.transitioningArea
+                    }
             )
 
 

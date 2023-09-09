@@ -17,8 +17,8 @@ gameMenu args =
         }
     ]
         |> Layout.column
-            ([ Html.Attributes.style "gap" "var(--big-space)" ]
-                ++ Layout.centered
+            (Html.Attributes.style "gap" "var(--big-space)"
+                :: Layout.centered
             )
         |> asFullScreenOverlay
             ([ Html.Attributes.style "background-color" "var(--secondary-color)"
@@ -34,8 +34,8 @@ gameEnd =
     , "created by Lucas Payr" |> Layout.text []
     ]
         |> Layout.column
-            ([ Html.Attributes.style "gap" "var(--big-space)" ]
-                ++ Layout.centered
+            (Html.Attributes.style "gap" "var(--big-space)"
+                :: Layout.centered
             )
         |> asFullScreenOverlay
             ([ Html.Attributes.style "background-color" "var(--trinary-color)"

@@ -4,15 +4,27 @@ import Html exposing (Html)
 import Set exposing (Set)
 
 
+type Color
+    = Yellow
+    | Blue
+
+
 type alias Game =
     { areas : Set Int
     , level : Int
     }
 
 
+type alias Args msg =
+    { onPress : Int -> msg
+    , areas : Set Int
+    , transitioningArea : Maybe Int
+    }
+
+
 type alias LevelDef msg =
     { init : Set Int
-    , toHtml : { onPress : Int -> msg } -> Set Int -> List (Html msg)
+    , toHtml : Args msg -> List (Html msg)
     }
 
 

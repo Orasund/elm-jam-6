@@ -1,6 +1,7 @@
 module View exposing (..)
 
 import Config
+import Game exposing (Color(..))
 import Html exposing (Html)
 import Html.Attributes
 
@@ -20,13 +21,33 @@ viewportMeta =
         []
 
 
-binaryColor : Bool -> String
-binaryColor bool =
+boolColor : Bool -> String
+boolColor bool =
     if bool then
-        "var(--primary-color)"
+        "var(--secondary-color)"
 
     else
-        "var(--secondary-color)"
+        "var(--primary-color)"
+
+
+color : Color -> String
+color bool =
+    case bool of
+        Blue ->
+            boolColor True
+
+        Yellow ->
+            boolColor False
+
+
+negColor : Color -> String
+negColor bool =
+    case bool of
+        Blue ->
+            boolColor False
+
+        Yellow ->
+            boolColor True
 
 
 stylesheet : Html msg

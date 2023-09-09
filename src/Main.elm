@@ -3,14 +3,12 @@ module Main exposing (..)
 import Browser
 import Config
 import Game exposing (Game)
-import Game.Level2
 import Html exposing (Html)
 import Html.Attributes
 import Level
 import Overlay exposing (Overlay(..))
 import Process
 import Random exposing (Generator, Seed)
-import Set
 import Task
 import View
 import View.Overlay
@@ -20,6 +18,7 @@ type alias Model =
     { game : Game
     , overlay : Maybe Overlay
     , seed : Seed
+    , transitioningArea : Maybe Int
     }
 
 
@@ -27,6 +26,8 @@ type Msg
     = NewGame
     | SetOverlay (Maybe Overlay)
     | GotSeed Seed
+    | StartTransition Int
+    | EndTransition
     | SetState Int
     | LevelCleared
 
@@ -43,10 +44,11 @@ apply { seed } generator =
 init : () -> ( Model, Cmd Msg )
 init () =
     ( { game =
-            Level.toGame 1
+            Level.toGame 2
                 |> Maybe.withDefault Game.empty
       , seed = Random.initialSeed 42
       , overlay = Nothing
+      , transitioningArea = Nothing
       }
     , Cmd.none
     )
@@ -72,6 +74,23 @@ setOverlay maybeOverlay model =
     { model | overlay = maybeOverlay }
 
 
+startTransition : Int -> Model -> ( Model, Cmd Msg )
+startTransition i model =
+    if model.transitioningArea == Nothing then
+        ( { model | transitioningArea = Just i }
+        , Task.succeed ()
+            |> Task.perform (\() -> SetState i)
+        )
+
+    else
+        ( model, Cmd.none )
+
+
+endTransition : Model -> Model
+endTransition model =
+    { model | transitioningArea = Nothing }
+
+
 setState : Int -> Model -> ( Model, Cmd Msg )
 setState i model =
     let
@@ -85,7 +104,8 @@ setState i model =
             |> Task.perform (\() -> LevelCleared)
 
       else
-        Cmd.none
+        Process.sleep 4000
+            |> Task.perform (\() -> EndTransition)
     )
 
 
@@ -95,6 +115,7 @@ levelCleared model =
         | game =
             Level.toGame (model.game.level + 1)
                 |> Maybe.withDefault Game.empty
+        , transitioningArea = Nothing
     }
 
 
@@ -115,8 +136,13 @@ update msg model =
             model |> setOverlay maybeOverlay |> withNoCmd
 
         SetState i ->
-            model
-                |> setState i
+            model |> setState i
+
+        StartTransition i ->
+            model |> startTransition i
+
+        EndTransition ->
+            model |> endTransition |> withNoCmd
 
         LevelCleared ->
             model |> levelCleared |> withNoCmd
@@ -142,8 +168,12 @@ view :
 view model =
     let
         content =
-            model.game.areas
-                |> Level.toHtml { onPress = SetState } model.game.level
+            model.game.level
+                |> Level.toHtml
+                    { onPress = StartTransition
+                    , areas = model.game.areas
+                    , transitioningArea = model.transitioningArea
+                    }
                 |> Maybe.withDefault [ View.Overlay.gameEnd ]
     in
     { title = Config.title
