@@ -6491,7 +6491,7 @@ var $author$project$Main$setState = F2(
 				function (_v1) {
 					return $author$project$Main$EndTransition;
 				},
-				$elm$core$Process$sleep(4000)));
+				$elm$core$Process$sleep(3000)));
 	});
 var $author$project$Main$SetState = function (a) {
 	return {$: 'SetState', a: a};

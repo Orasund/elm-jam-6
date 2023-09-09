@@ -107,7 +107,7 @@ setState list model =
             |> Task.perform (\() -> ClearedLevel)
 
       else
-        Process.sleep 4000
+        Process.sleep 3000
             |> Task.perform (\() -> EndTransition)
     )
 

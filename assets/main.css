@@ -67,8 +67,8 @@ button {
 }
 
 .areaTransition {
-    transition: clip-path 10s;
-    transition-timing-function: cubic-bezier(1 0 1 1);
+    transition: clip-path 4s;
+    transition-timing-function: ease-in;
 }
 
 button:hover {
