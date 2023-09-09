@@ -1,4 +1,4 @@
-module Game.Level1 exposing (..)
+module Game.Level2 exposing (..)
 
 import Config
 import Game exposing (LevelDef)

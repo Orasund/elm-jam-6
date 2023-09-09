@@ -3,12 +3,15 @@ module Main exposing (..)
 import Browser
 import Config
 import Game exposing (Game)
-import Game.Level1
+import Game.Level2
 import Html exposing (Html)
 import Html.Attributes
-import Level exposing (Button)
+import Level
 import Overlay exposing (Overlay(..))
+import Process
 import Random exposing (Generator, Seed)
+import Set
+import Task
 import View
 import View.Overlay
 
@@ -25,6 +28,7 @@ type Msg
     | SetOverlay (Maybe Overlay)
     | GotSeed Seed
     | SetState Int
+    | LevelCleared
 
 
 apply : Model -> Generator Model -> Model
@@ -38,9 +42,11 @@ apply { seed } generator =
 
 init : () -> ( Model, Cmd Msg )
 init () =
-    ( { game = Game.new
+    ( { game =
+            Level.toGame 1
+                |> Maybe.withDefault Game.empty
       , seed = Random.initialSeed 42
-      , overlay = Just GameMenu
+      , overlay = Nothing
       }
     , Cmd.none
     )
@@ -48,7 +54,11 @@ init () =
 
 newGame : Model -> Model
 newGame model =
-    { model | game = Game.new }
+    { model
+        | game =
+            Level.toGame 1
+                |> Maybe.withDefault Game.empty
+    }
         |> setOverlay Nothing
 
 
@@ -62,12 +72,29 @@ setOverlay maybeOverlay model =
     { model | overlay = maybeOverlay }
 
 
-setState : Int -> Model -> Model
+setState : Int -> Model -> ( Model, Cmd Msg )
 setState i model =
-    { model
-        | game =
+    let
+        game =
             model.game
                 |> Game.applyButton i
+    in
+    ( { model | game = game }
+    , if Game.isCleared game then
+        Process.sleep 6000
+            |> Task.perform (\() -> LevelCleared)
+
+      else
+        Cmd.none
+    )
+
+
+levelCleared : Model -> Model
+levelCleared model =
+    { model
+        | game =
+            Level.toGame (model.game.level + 1)
+                |> Maybe.withDefault Game.empty
     }
 
 
@@ -90,7 +117,9 @@ update msg model =
         SetState i ->
             model
                 |> setState i
-                |> withNoCmd
+
+        LevelCleared ->
+            model |> levelCleared |> withNoCmd
 
 
 viewOverlay : Model -> Overlay -> Html Msg
@@ -99,6 +128,9 @@ viewOverlay _ overlay =
         GameMenu ->
             View.Overlay.gameMenu
                 { startGame = NewGame }
+
+        GameEnd ->
+            View.Overlay.gameEnd
 
 
 view :
@@ -110,7 +142,9 @@ view :
 view model =
     let
         content =
-            Game.Level1.toHtml { onPress = SetState } model.game.level
+            model.game.areas
+                |> Level.toHtml { onPress = SetState } model.game.level
+                |> Maybe.withDefault [ View.Overlay.gameEnd ]
     in
     { title = Config.title
     , body =

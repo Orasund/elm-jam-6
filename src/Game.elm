@@ -1,28 +1,47 @@
 module Game exposing (..)
 
-import Array exposing (Array)
-import Game.Level1
-import Level exposing (Level)
+import Html exposing (Html)
+import Set exposing (Set)
 
 
 type alias Game =
-    { level : Level }
+    { areas : Set Int
+    , level : Int
+    }
 
 
-new : Game
-new =
-    { level = Game.Level1.init }
+type alias LevelDef msg =
+    { init : Set Int
+    , toHtml : { onPress : Int -> msg } -> Set Int -> List (Html msg)
+    }
+
+
+empty : Game
+empty =
+    { areas = Set.empty
+    , level = 0
+    }
+
+
+new : Set Int -> Int -> Game
+new areas level =
+    { areas = areas
+    , level = level
+    }
+
+
+isCleared : Game -> Bool
+isCleared game =
+    Set.isEmpty game.areas
 
 
 applyButton : Int -> Game -> Game
 applyButton i game =
-    game.level
-        |> Level.getButton i
-        |> Maybe.map
-            (\button ->
-                game.level
-                    |> Level.removeButton i
-                    |> Level.setArea button.target button.value
-            )
-        |> Maybe.withDefault game.level
-        |> (\level -> { game | level = level })
+    (if Set.member i game.areas then
+        Set.remove i game.areas
+
+     else
+        Set.insert i game.areas
+    )
+        |> Debug.log "areas"
+        |> (\areas -> { game | areas = areas })

@@ -1,43 +1,39 @@
 module Level exposing (..)
 
 import Dict exposing (Dict)
+import Game exposing (Game, LevelDef)
+import Game.Level1
+import Game.Level2
+import Html exposing (Html)
 import Set exposing (Set)
 
 
-type alias Button =
-    { target : Int, value : Bool }
+fromInt : Int -> Maybe (LevelDef msg)
+fromInt int =
+    case int of
+        1 ->
+            Game.Level1.def |> Just
+
+        2 ->
+            Game.Level2.def |> Just
+
+        _ ->
+            Nothing
 
 
-type alias Level =
-    { areas : Set Int
-    , buttons : Dict Int Button
-    }
+toHtml : { onPress : Int -> msg } -> Int -> Set Int -> Maybe (List (Html msg))
+toHtml args int areas =
+    fromInt int
+        |> Maybe.map
+            (\def ->
+                def.toHtml args areas
+            )
 
 
-getArea : Int -> Level -> Bool
-getArea i level =
-    level.areas |> Set.member i
-
-
-setArea : Int -> Bool -> Level -> Level
-setArea i b level =
-    { level
-        | areas =
-            if b then
-                Set.remove i level.areas
-
-            else
-                Set.insert i level.areas
-    }
-
-
-getButton : Int -> Level -> Maybe { target : Int, value : Bool }
-getButton i level =
-    level.buttons |> Dict.get i
-
-
-removeButton : Int -> Level -> Level
-removeButton i level =
-    { level
-        | buttons = Dict.remove i level.buttons
-    }
+toGame : Int -> Maybe Game
+toGame int =
+    fromInt int
+        |> Maybe.map
+            (\{ init } ->
+                Game.new init int
+            )

@@ -11,6 +11,7 @@
 :root {
     --primary-color: #ffc608;
     --secondary-color: #8d6fe3;
+    --trinary-color: #ec687f;
 
     --background-color: white;
 
@@ -53,6 +54,7 @@ body {
 
 .content {
     position: relative;
+    height: 100%;
 }
 
 button {
@@ -60,16 +62,22 @@ button {
     background-color: var(--primary-color);
     border-radius: var(--small-space);
     padding: var(--small-space) var(--space);
+    transition: filter 0.5s;
+    filter: drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.0));
 }
 
-button:hover,
+button:hover {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.2));
+}
+
 button:focus {
-    filter: brightness(0.9);
+    filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, 0.2));
 }
 
 button:active {
-    filter: brightness(0.75);
+    filter: drop-shadow(0px 2px 0px rgba(0, 0, 0, 0));
 }
+
 
 /***************************************************
  * UTILITY CLASSES
