@@ -6282,6 +6282,30 @@ var $author$project$Game$Level3$toHtml = function (args) {
 										color: $author$project$Game$Blue,
 										pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, ($author$project$Config$screenMinHeight / 2) | 0),
 										radius: ($author$project$Config$screenMinWidth / 2) | 0
+									}),
+									A2(
+									$Orasund$elm_layout$Layout$textButton,
+									_List_fromArray(
+										[
+											A2($elm$html$Html$Attributes$style, 'background-color', 'var(--trinary-color)'),
+											A2($elm$html$Html$Attributes$style, 'aspect-ratio', '1'),
+											A2($elm$html$Html$Attributes$style, 'color', 'white'),
+											A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
+											A2($elm$html$Html$Attributes$style, 'width', '100px'),
+											A2($elm$html$Html$Attributes$style, 'border-radius', '100%'),
+											A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+											A2(
+											$elm$html$Html$Attributes$style,
+											'top',
+											$elm$core$String$fromInt((($author$project$Config$screenMinHeight / 2) | 0) - 150) + 'px'),
+											A2(
+											$elm$html$Html$Attributes$style,
+											'left',
+											$elm$core$String$fromInt((($author$project$Config$screenMinWidth / 2) | 0) - 50) + 'px')
+										]),
+									{
+										label: 'Reset',
+										onPress: $elm$core$Maybe$Just(args.reset)
 									})
 								]))
 						]),
@@ -6432,6 +6456,18 @@ var $author$project$Main$newGame = function (model) {
 					$author$project$Game$empty,
 					$author$project$Level$toGame(1))
 			}));
+};
+var $author$project$Main$resetLevel = function (model) {
+	return _Utils_update(
+		model,
+		{
+			game: A2(
+				$elm$core$Maybe$withDefault,
+				$author$project$Game$empty,
+				$author$project$Level$toGame(model.game.level)),
+			overlay: $elm$core$Maybe$Just($author$project$Overlay$LevelCleared),
+			transitioningArea: $elm$core$Set$empty
+		});
 };
 var $author$project$Main$ClearedLevel = {$: 'ClearedLevel'};
 var $author$project$Main$EndTransition = {$: 'EndTransition'};
@@ -6894,11 +6930,15 @@ var $author$project$Main$update = F2(
 			case 'EndTransition':
 				return withNoCmd(
 					$author$project$Main$endTransition(model));
-			default:
+			case 'ClearedLevel':
 				return withNoCmd(
 					$author$project$Main$levelCleared(model));
+			default:
+				return withNoCmd(
+					$author$project$Main$resetLevel(model));
 		}
 	});
+var $author$project$Main$ResetLevel = {$: 'ResetLevel'};
 var $author$project$Main$StartTransition = function (a) {
 	return {$: 'StartTransition', a: a};
 };
@@ -6972,8 +7012,7 @@ var $author$project$Level$toHtml = F2(
 		return A2(
 			$elm$core$Maybe$map,
 			function (def) {
-				return def.toHtml(
-					{areas: args.areas, onPress: args.onPress, transitioningArea: args.transitioningArea});
+				return def.toHtml(args);
 			},
 			$author$project$Level$fromInt(_int));
 	});
@@ -7072,7 +7111,7 @@ var $author$project$Main$view = function (model) {
 			[$author$project$View$Overlay$gameEnd]),
 		A2(
 			$author$project$Level$toHtml,
-			{areas: model.game.areas, onPress: $author$project$Main$StartTransition, transitioningArea: model.transitioningArea},
+			{areas: model.game.areas, onPress: $author$project$Main$StartTransition, reset: $author$project$Main$ResetLevel, transitioningArea: model.transitioningArea},
 			model.game.level));
 	return {
 		body: _List_fromArray(

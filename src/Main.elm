@@ -31,6 +31,7 @@ type Msg
     | EndTransition
     | SetState (List Int)
     | ClearedLevel
+    | ResetLevel
 
 
 apply : Model -> Generator Model -> Model
@@ -123,6 +124,15 @@ levelCleared model =
     }
 
 
+resetLevel : Model -> Model
+resetLevel model =
+    { model
+        | game = Level.toGame model.game.level |> Maybe.withDefault Game.empty
+        , transitioningArea = Set.empty
+        , overlay = Just LevelCleared
+    }
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     let
@@ -150,6 +160,9 @@ update msg model =
 
         ClearedLevel ->
             model |> levelCleared |> withNoCmd
+
+        ResetLevel ->
+            model |> resetLevel |> withNoCmd
 
 
 viewOverlay : Model -> Overlay -> Html Msg
@@ -180,6 +193,7 @@ view model =
                     { onPress = StartTransition
                     , areas = model.game.areas
                     , transitioningArea = model.transitioningArea
+                    , reset = ResetLevel
                     }
                 |> Maybe.withDefault [ View.Overlay.gameEnd ]
     in

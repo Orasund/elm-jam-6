@@ -60,6 +60,20 @@ toHtml args =
                 , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
                 , radius = Config.screenMinWidth // 2
                 }
+             , Layout.textButton
+                [ Html.Attributes.style "background-color" "var(--trinary-color)"
+                , Html.Attributes.style "aspect-ratio" "1"
+                , Html.Attributes.style "color" "white"
+                , Html.Attributes.style "font-weight" "bold"
+                , Html.Attributes.style "width" "100px"
+                , Html.Attributes.style "border-radius" "100%"
+                , Html.Attributes.style "position" "absolute"
+                , Html.Attributes.style "top" (String.fromInt (Config.screenMinHeight // 2 - 150) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (Config.screenMinWidth // 2 - 50) ++ "px")
+                ]
+                { label = "Reset"
+                , onPress = args.reset |> Just
+                }
              ]
                 |> View.Level.area
                     { transition = Set.member 2 args.transitioningArea

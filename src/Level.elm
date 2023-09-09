@@ -24,16 +24,19 @@ fromInt int =
             Nothing
 
 
-toHtml : { onPress : List Int -> msg, areas : Set Int, transitioningArea : Set Int } -> Int -> Maybe (List (Html msg))
+toHtml :
+    { onPress : List Int -> msg
+    , areas : Set Int
+    , transitioningArea : Set Int
+    , reset : msg
+    }
+    -> Int
+    -> Maybe (List (Html msg))
 toHtml args int =
     fromInt int
         |> Maybe.map
             (\def ->
-                def.toHtml
-                    { onPress = args.onPress
-                    , areas = args.areas
-                    , transitioningArea = args.transitioningArea
-                    }
+                def.toHtml args
             )
 
 

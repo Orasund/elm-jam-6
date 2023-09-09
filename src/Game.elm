@@ -19,6 +19,7 @@ type alias Args msg =
     { onPress : List Int -> msg
     , areas : Set Int
     , transitioningArea : Set Int
+    , reset : msg
     }
 
 
