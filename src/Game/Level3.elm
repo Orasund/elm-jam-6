@@ -6,7 +6,6 @@ import Html exposing (Html)
 import Html.Attributes
 import Layout
 import Set
-import View
 import View.Level
 
 

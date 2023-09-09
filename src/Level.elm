@@ -16,14 +16,14 @@ fromInt int =
             Game.Level1.def |> Just
 
         2 ->
-            Game.Level2.def |> Just
+            Game.Level4.def |> Just
 
+        --  Game.Level2.def |> Just
         3 ->
             Game.Level3.def |> Just
 
-        4 ->
-            Game.Level4.def |> Just
-
+        {--4 ->
+            Game.Level4.def |> Just--}
         _ ->
             Nothing
 

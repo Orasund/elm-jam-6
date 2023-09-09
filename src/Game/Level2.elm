@@ -2,7 +2,7 @@ module Game.Level2 exposing (..)
 
 import Config
 import Game exposing (Args, Color(..), LevelDef)
-import Html exposing (Attribute, Html)
+import Html exposing (Html)
 import Html.Attributes
 import Layout
 import Set exposing (Set)
