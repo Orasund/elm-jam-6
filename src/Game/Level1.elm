@@ -5,7 +5,7 @@ import Game exposing (Args, Color(..), LevelDef)
 import Html exposing (Html)
 import Html.Attributes
 import Layout
-import Set exposing (Set)
+import Set
 import View
 import View.Level
 
@@ -22,7 +22,7 @@ toHtml args =
     [ View.Level.base Yellow
     , [ firstArea Blue
       , path Blue
-      , firstButton Blue (args.onPress 0)
+      , firstButton Blue (args.onPress [ 0 ])
       ]
         |> View.Level.area
             [ Html.Attributes.style "z-index" "1"
@@ -33,12 +33,12 @@ toHtml args =
             }
     , [ secondArea Yellow
       , path Yellow
-      , secondButton Yellow (args.onPress 1)
+      , secondButton Yellow (args.onPress [ 1 ])
       ]
         |> View.Level.area
             [ Html.Attributes.style "z-index" "2"
             ]
-            { transition = args.transitioningArea == Just 0
+            { transition = Set.member 0 args.transitioningArea
             , visible = Set.member 0 args.areas |> not
             , center = ( 200, 525 )
             }
@@ -47,7 +47,7 @@ toHtml args =
         |> View.Level.area
             [ Html.Attributes.style "z-index" "3"
             ]
-            { transition = args.transitioningArea == Just 1
+            { transition = Set.member 1 args.transitioningArea
             , visible = Set.member 1 args.areas |> not
             , center = ( 200, 175 )
             }

@@ -16,9 +16,9 @@ type alias Game =
 
 
 type alias Args msg =
-    { onPress : Int -> msg
+    { onPress : List Int -> msg
     , areas : Set Int
-    , transitioningArea : Maybe Int
+    , transitioningArea : Set Int
     }
 
 

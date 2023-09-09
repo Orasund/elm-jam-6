@@ -5671,7 +5671,9 @@ var $author$project$Game$Level1$toHtml = function (args) {
 					A2(
 					$author$project$Game$Level1$firstButton,
 					$author$project$Game$Blue,
-					args.onPress(0))
+					args.onPress(
+						_List_fromArray(
+							[0])))
 				])),
 			A3(
 			$author$project$View$Level$area,
@@ -5681,9 +5683,7 @@ var $author$project$Game$Level1$toHtml = function (args) {
 				]),
 			{
 				center: _Utils_Tuple2(200, 525),
-				transition: _Utils_eq(
-					args.transitioningArea,
-					$elm$core$Maybe$Just(0)),
+				transition: A2($elm$core$Set$member, 0, args.transitioningArea),
 				visible: !A2($elm$core$Set$member, 0, args.areas)
 			},
 			_List_fromArray(
@@ -5693,7 +5693,9 @@ var $author$project$Game$Level1$toHtml = function (args) {
 					A2(
 					$author$project$Game$Level1$secondButton,
 					$author$project$Game$Yellow,
-					args.onPress(1))
+					args.onPress(
+						_List_fromArray(
+							[1])))
 				])),
 			A3(
 			$author$project$View$Level$area,
@@ -5703,9 +5705,7 @@ var $author$project$Game$Level1$toHtml = function (args) {
 				]),
 			{
 				center: _Utils_Tuple2(200, 175),
-				transition: _Utils_eq(
-					args.transitioningArea,
-					$elm$core$Maybe$Just(1)),
+				transition: A2($elm$core$Set$member, 1, args.transitioningArea),
 				visible: !A2($elm$core$Set$member, 1, args.areas)
 			},
 			_List_fromArray(
@@ -5899,12 +5899,7 @@ var $author$project$Game$Level2$toggle = function (args) {
 					$author$project$Game$Level2$firstCircle($author$project$Game$Blue),
 					A2(
 						$elm$core$Maybe$map,
-						function (f) {
-							return A2(
-								$author$project$Game$Level2$firstButton,
-								$author$project$Game$Blue,
-								f(args.area));
-						},
+						$author$project$Game$Level2$firstButton($author$project$Game$Blue),
 						args.onPress))
 				]));
 	} else {
@@ -5919,12 +5914,7 @@ var $author$project$Game$Level2$toggle = function (args) {
 					$author$project$Game$Level2$secondCircle($author$project$Game$Yellow),
 					A2(
 						$elm$core$Maybe$map,
-						function (f) {
-							return A2(
-								$author$project$Game$Level2$secondButton,
-								$author$project$Game$Yellow,
-								f(args.area));
-						},
+						$author$project$Game$Level2$secondButton($author$project$Game$Yellow),
 						args.onPress)),
 					$author$project$Game$Level2$path($author$project$Game$Yellow),
 					$author$project$Game$Level2$firstCircle($author$project$Game$Yellow)
@@ -5932,19 +5922,9 @@ var $author$project$Game$Level2$toggle = function (args) {
 	}
 };
 var $author$project$Game$Level2$toHtml = function (args) {
-	var transitiningFirst = _Utils_eq(
-		args.transitioningArea,
-		$elm$core$Maybe$Just(0));
-	var frontColor = A2($elm$core$Set$member, 0, args.areas) ? (_Utils_eq(
-		args.transitioningArea,
-		$elm$core$Maybe$Just(0)) ? $author$project$Game$Yellow : $author$project$Game$Blue) : (_Utils_eq(
-		args.transitioningArea,
-		$elm$core$Maybe$Just(0)) ? $author$project$Game$Blue : $author$project$Game$Yellow);
-	var backColor = A2($elm$core$Set$member, 0, args.areas) ? (_Utils_eq(
-		args.transitioningArea,
-		$elm$core$Maybe$Just(0)) ? $author$project$Game$Blue : $author$project$Game$Yellow) : (_Utils_eq(
-		args.transitioningArea,
-		$elm$core$Maybe$Just(0)) ? $author$project$Game$Yellow : $author$project$Game$Blue);
+	var transitiningFirst = A2($elm$core$Set$member, 0, args.transitioningArea);
+	var frontColor = A2($elm$core$Set$member, 0, args.areas) ? (transitiningFirst ? $author$project$Game$Yellow : $author$project$Game$Blue) : (transitiningFirst ? $author$project$Game$Blue : $author$project$Game$Yellow);
+	var backColor = A2($elm$core$Set$member, 0, args.areas) ? (transitiningFirst ? $author$project$Game$Blue : $author$project$Game$Yellow) : (transitiningFirst ? $author$project$Game$Yellow : $author$project$Game$Blue);
 	return _List_fromArray(
 		[
 			$author$project$View$Level$base($author$project$Game$Blue),
@@ -5953,15 +5933,15 @@ var $author$project$Game$Level2$toHtml = function (args) {
 			A2(
 			$author$project$Game$Level2$leftButton,
 			$author$project$Game$Yellow,
-			args.onPress(1)),
+			args.onPress(
+				_List_fromArray(
+					[1]))),
 			A3(
 			$author$project$View$Level$area,
 			_List_Nil,
 			{
 				center: _Utils_Tuple2(75, 275),
-				transition: _Utils_eq(
-					args.transitioningArea,
-					$elm$core$Maybe$Just(1)),
+				transition: A2($elm$core$Set$member, 1, args.transitioningArea),
 				visible: !A2($elm$core$Set$member, 1, args.areas)
 			},
 			_List_fromArray(
@@ -5972,10 +5952,8 @@ var $author$project$Game$Level2$toHtml = function (args) {
 			$author$project$View$Level$area,
 			_List_Nil,
 			{
-				center: _Utils_Tuple2(75, 275),
-				transition: _Utils_eq(
-					args.transitioningArea,
-					$elm$core$Maybe$Just(2)),
+				center: _Utils_Tuple2(200, 175),
+				transition: A2($elm$core$Set$member, 2, args.transitioningArea),
 				visible: !A2($elm$core$Set$member, 2, args.areas)
 			},
 			_List_fromArray(
@@ -5984,17 +5962,21 @@ var $author$project$Game$Level2$toHtml = function (args) {
 				])),
 			$author$project$Game$Level2$toggle(
 			{
-				area: 0,
 				areas: args.areas,
 				center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, ($author$project$Config$screenMinHeight / 2) | 0),
 				color: backColor,
-				onPress: $elm$core$Maybe$Just(args.onPress),
+				onPress: (A2($elm$core$Set$member, 1, args.areas) || A2($elm$core$Set$member, 0, args.areas)) ? (A2($elm$core$Set$member, 0, args.areas) ? $elm$core$Maybe$Just(
+					args.onPress(
+						_List_fromArray(
+							[0, 2]))) : $elm$core$Maybe$Just(
+					args.onPress(
+						_List_fromArray(
+							[0])))) : $elm$core$Maybe$Nothing,
 				transition: false,
 				visible: true
 			}),
 			$author$project$Game$Level2$toggle(
 			{
-				area: 0,
 				areas: args.areas,
 				center: _Utils_eq(frontColor, $author$project$Game$Blue) ? _Utils_Tuple2(200, 175) : _Utils_Tuple2(200, 525),
 				color: frontColor,
@@ -6039,10 +6021,10 @@ var $author$project$Main$init = function (_v0) {
 			game: A2(
 				$elm$core$Maybe$withDefault,
 				$author$project$Game$empty,
-				$author$project$Level$toGame(2)),
+				$author$project$Level$toGame(1)),
 			overlay: $elm$core$Maybe$Nothing,
 			seed: $elm$random$Random$initialSeed(42),
-			transitioningArea: $elm$core$Maybe$Nothing
+			transitioningArea: $elm$core$Set$empty
 		},
 		$elm$core$Platform$Cmd$none);
 };
@@ -6054,7 +6036,7 @@ var $author$project$Main$subscriptions = function (_v0) {
 var $author$project$Main$endTransition = function (model) {
 	return _Utils_update(
 		model,
-		{transitioningArea: $elm$core$Maybe$Nothing});
+		{transitioningArea: $elm$core$Set$empty});
 };
 var $author$project$Main$gotSeed = F2(
 	function (seed, model) {
@@ -6070,7 +6052,7 @@ var $author$project$Main$levelCleared = function (model) {
 				$elm$core$Maybe$withDefault,
 				$author$project$Game$empty,
 				$author$project$Level$toGame(model.game.level + 1)),
-			transitioningArea: $elm$core$Maybe$Nothing
+			transitioningArea: $elm$core$Set$empty
 		});
 };
 var $author$project$Main$setOverlay = F2(
@@ -6491,8 +6473,8 @@ var $author$project$Game$isCleared = function (game) {
 };
 var $elm$core$Process$sleep = _Process_sleep;
 var $author$project$Main$setState = F2(
-	function (i, model) {
-		var game = A2($author$project$Game$applyButton, i, model.game);
+	function (list, model) {
+		var game = A3($elm$core$List$foldl, $author$project$Game$applyButton, model.game, list);
 		return _Utils_Tuple2(
 			_Utils_update(
 				model,
@@ -6513,17 +6495,17 @@ var $author$project$Main$SetState = function (a) {
 	return {$: 'SetState', a: a};
 };
 var $author$project$Main$startTransition = F2(
-	function (i, model) {
-		return _Utils_eq(model.transitioningArea, $elm$core$Maybe$Nothing) ? _Utils_Tuple2(
+	function (list, model) {
+		return $elm$core$Set$isEmpty(model.transitioningArea) ? _Utils_Tuple2(
 			_Utils_update(
 				model,
 				{
-					transitioningArea: $elm$core$Maybe$Just(i)
+					transitioningArea: $elm$core$Set$fromList(list)
 				}),
 			A2(
 				$elm$core$Task$perform,
 				function (_v0) {
-					return $author$project$Main$SetState(i);
+					return $author$project$Main$SetState(list);
 				},
 				$elm$core$Task$succeed(_Utils_Tuple0))) : _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 	});
@@ -6545,11 +6527,11 @@ var $author$project$Main$update = F2(
 				return withNoCmd(
 					A2($author$project$Main$setOverlay, maybeOverlay, model));
 			case 'SetState':
-				var i = msg.a;
-				return A2($author$project$Main$setState, i, model);
+				var list = msg.a;
+				return A2($author$project$Main$setState, list, model);
 			case 'StartTransition':
-				var i = msg.a;
-				return A2($author$project$Main$startTransition, i, model);
+				var list = msg.a;
+				return A2($author$project$Main$startTransition, list, model);
 			case 'EndTransition':
 				return withNoCmd(
 					$author$project$Main$endTransition(model));

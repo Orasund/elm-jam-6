@@ -20,15 +20,18 @@ def =
 toHtml : Args msg -> List (Html msg)
 toHtml args =
     let
+        transitiningFirst =
+            Set.member 0 args.transitioningArea
+
         backColor =
             if Set.member 0 args.areas then
-                if args.transitioningArea == Just 0 then
+                if transitiningFirst then
                     Blue
 
                 else
                     Yellow
 
-            else if args.transitioningArea == Just 0 then
+            else if transitiningFirst then
                 Yellow
 
             else
@@ -36,43 +39,48 @@ toHtml args =
 
         frontColor =
             if Set.member 0 args.areas then
-                if args.transitioningArea == Just 0 then
+                if transitiningFirst then
                     Yellow
 
                 else
                     Blue
 
-            else if args.transitioningArea == Just 0 then
+            else if transitiningFirst then
                 Blue
 
             else
                 Yellow
-
-        transitiningFirst =
-            args.transitioningArea == Just 0
     in
     [ View.Level.base Blue
     , buttomSquare Yellow
     , leftPath Yellow
-    , leftButton Yellow (args.onPress 1)
+    , leftButton Yellow (args.onPress [ 1 ])
     , [ leftSquare Blue
       ]
         |> View.Level.area []
-            { transition = args.transitioningArea == Just 1
+            { transition = Set.member 1 args.transitioningArea
             , visible = Set.member 1 args.areas |> not
             , center = ( 75, 275 )
             }
     , [ rightSquare Blue ]
         |> View.Level.area []
-            { transition = args.transitioningArea == Just 2
+            { transition = Set.member 2 args.transitioningArea
             , visible = Set.member 2 args.areas |> not
-            , center = ( 75, 275 )
+            , center = ( 200, 175 )
             }
     , toggle
         { color = backColor
         , areas = args.areas
-        , area = 0
-        , onPress = args.onPress |> Just
+        , onPress =
+            if Set.member 1 args.areas || Set.member 0 args.areas then
+                if Set.member 0 args.areas then
+                    args.onPress [ 0, 2 ] |> Just
+
+                else
+                    args.onPress [ 0 ] |> Just
+
+            else
+                Nothing
         , transition = False
         , visible = True
         , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
@@ -80,7 +88,6 @@ toHtml args =
     , toggle
         { color = frontColor
         , areas = args.areas
-        , area = 0
         , onPress = Nothing
         , transition = transitiningFirst
         , visible = transitiningFirst
@@ -94,14 +101,14 @@ toHtml args =
     ]
 
 
-toggle : { color : Color, area : Int, areas : Set Int, onPress : Maybe (Int -> msg), transition : Bool, visible : Bool, center : ( Int, Int ) } -> Html msg
+toggle : { color : Color, areas : Set Int, onPress : Maybe msg, transition : Bool, visible : Bool, center : ( Int, Int ) } -> Html msg
 toggle args =
     case args.color of
         Blue ->
             [ secondCircle Blue
             , path Blue
             , args.onPress
-                |> Maybe.map (\f -> firstButton Blue (f args.area))
+                |> Maybe.map (firstButton Blue)
                 |> Maybe.withDefault (firstCircle Blue)
             ]
                 |> View.Level.area []
@@ -112,7 +119,7 @@ toggle args =
 
         Yellow ->
             [ args.onPress
-                |> Maybe.map (\f -> secondButton Yellow (f args.area))
+                |> Maybe.map (secondButton Yellow)
                 |> Maybe.withDefault (secondCircle Yellow)
             , path Yellow
             , firstCircle Yellow

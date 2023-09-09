@@ -9,6 +9,7 @@ import Level
 import Overlay exposing (Overlay(..))
 import Process
 import Random exposing (Generator, Seed)
+import Set exposing (Set)
 import Task
 import View
 import View.Overlay
@@ -18,7 +19,7 @@ type alias Model =
     { game : Game
     , overlay : Maybe Overlay
     , seed : Seed
-    , transitioningArea : Maybe Int
+    , transitioningArea : Set Int
     }
 
 
@@ -26,9 +27,9 @@ type Msg
     = NewGame
     | SetOverlay (Maybe Overlay)
     | GotSeed Seed
-    | StartTransition Int
+    | StartTransition (List Int)
     | EndTransition
-    | SetState Int
+    | SetState (List Int)
     | LevelCleared
 
 
@@ -44,11 +45,11 @@ apply { seed } generator =
 init : () -> ( Model, Cmd Msg )
 init () =
     ( { game =
-            Level.toGame 2
+            Level.toGame 1
                 |> Maybe.withDefault Game.empty
       , seed = Random.initialSeed 42
       , overlay = Nothing
-      , transitioningArea = Nothing
+      , transitioningArea = Set.empty
       }
     , Cmd.none
     )
@@ -74,12 +75,12 @@ setOverlay maybeOverlay model =
     { model | overlay = maybeOverlay }
 
 
-startTransition : Int -> Model -> ( Model, Cmd Msg )
-startTransition i model =
-    if model.transitioningArea == Nothing then
-        ( { model | transitioningArea = Just i }
+startTransition : List Int -> Model -> ( Model, Cmd Msg )
+startTransition list model =
+    if Set.isEmpty model.transitioningArea then
+        ( { model | transitioningArea = list |> Set.fromList }
         , Task.succeed ()
-            |> Task.perform (\() -> SetState i)
+            |> Task.perform (\() -> SetState list)
         )
 
     else
@@ -88,15 +89,15 @@ startTransition i model =
 
 endTransition : Model -> Model
 endTransition model =
-    { model | transitioningArea = Nothing }
+    { model | transitioningArea = Set.empty }
 
 
-setState : Int -> Model -> ( Model, Cmd Msg )
-setState i model =
+setState : List Int -> Model -> ( Model, Cmd Msg )
+setState list model =
     let
         game =
-            model.game
-                |> Game.applyButton i
+            list
+                |> List.foldl Game.applyButton model.game
     in
     ( { model | game = game }
     , if Game.isCleared game then
@@ -115,7 +116,7 @@ levelCleared model =
         | game =
             Level.toGame (model.game.level + 1)
                 |> Maybe.withDefault Game.empty
-        , transitioningArea = Nothing
+        , transitioningArea = Set.empty
     }
 
 
@@ -135,11 +136,11 @@ update msg model =
         SetOverlay maybeOverlay ->
             model |> setOverlay maybeOverlay |> withNoCmd
 
-        SetState i ->
-            model |> setState i
+        SetState list ->
+            model |> setState list
 
-        StartTransition i ->
-            model |> startTransition i
+        StartTransition list ->
+            model |> startTransition list
 
         EndTransition ->
             model |> endTransition |> withNoCmd

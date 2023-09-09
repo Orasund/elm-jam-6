@@ -20,7 +20,7 @@ fromInt int =
             Nothing
 
 
-toHtml : { onPress : Int -> msg, areas : Set Int, transitioningArea : Maybe Int } -> Int -> Maybe (List (Html msg))
+toHtml : { onPress : List Int -> msg, areas : Set Int, transitioningArea : Set Int } -> Int -> Maybe (List (Html msg))
 toHtml args int =
     fromInt int
         |> Maybe.map
