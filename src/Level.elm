@@ -4,6 +4,7 @@ import Game exposing (Game, LevelDef)
 import Game.Level1
 import Game.Level2
 import Game.Level3
+import Game.Level4
 import Html exposing (Html)
 import Set exposing (Set)
 
@@ -19,6 +20,9 @@ fromInt int =
 
         3 ->
             Game.Level3.def |> Just
+
+        4 ->
+            Game.Level4.def |> Just
 
         _ ->
             Nothing

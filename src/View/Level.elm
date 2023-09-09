@@ -5,7 +5,6 @@ import Game exposing (Color)
 import Html exposing (Attribute, Html)
 import Html.Attributes
 import Layout
-import Set exposing (Set)
 import View
 
 
@@ -164,7 +163,7 @@ button bool attrs onPress =
         }
 
 
-downwardsBigButton : { color : Color, pos : ( Int, Int ), onPress : msg } -> List (Html msg)
+downwardsBigButton : { color : Color, pos : ( Int, Int ), onPress : Maybe msg } -> List (Html msg)
 downwardsBigButton args =
     let
         ( x, y ) =
@@ -179,17 +178,26 @@ downwardsBigButton args =
         , Html.Attributes.style "background-color" (View.color args.color)
         ]
         Layout.none
-    , button args.color
-        [ Html.Attributes.style "width" "200px"
-        , Html.Attributes.style "top" (String.fromInt (y - 100) ++ "px")
-        , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
-        , Html.Attributes.class "font-size-big"
-        ]
-        args.onPress
+    , case args.onPress of
+        Just msg ->
+            button args.color
+                [ Html.Attributes.style "width" "200px"
+                , Html.Attributes.style "top" (String.fromInt (y - 100) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
+                , Html.Attributes.class "font-size-big"
+                ]
+                msg
+
+        Nothing ->
+            circle args.color
+                [ Html.Attributes.style "width" "200px"
+                , Html.Attributes.style "top" (String.fromInt (y - 100) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
+                ]
     ]
 
 
-downwardsHugeButton : { color : Color, pos : ( Int, Int ), onPress : msg } -> List (Html msg)
+downwardsHugeButton : { color : Color, pos : ( Int, Int ), onPress : Maybe msg } -> List (Html msg)
 downwardsHugeButton args =
     let
         ( x, y ) =
@@ -204,17 +212,26 @@ downwardsHugeButton args =
         , Html.Attributes.style "background-color" (View.color args.color)
         ]
         Layout.none
-    , button args.color
-        [ Html.Attributes.style "width" "400px"
-        , Html.Attributes.style "top" (String.fromInt (y - 200) ++ "px")
-        , Html.Attributes.style "left" (String.fromInt (x - 200) ++ "px")
-        , Html.Attributes.class "font-size-big"
-        ]
-        args.onPress
+    , case args.onPress of
+        Just msg ->
+            button args.color
+                [ Html.Attributes.style "width" "400px"
+                , Html.Attributes.style "top" (String.fromInt (y - 200) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 200) ++ "px")
+                , Html.Attributes.class "font-size-big"
+                ]
+                msg
+
+        Nothing ->
+            circle args.color
+                [ Html.Attributes.style "width" "400px"
+                , Html.Attributes.style "top" (String.fromInt (y - 200) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 200) ++ "px")
+                ]
     ]
 
 
-downwardsButton : { color : Color, pos : ( Int, Int ), onPress : msg } -> List (Html msg)
+downwardsButton : { color : Color, pos : ( Int, Int ), onPress : Maybe msg } -> List (Html msg)
 downwardsButton args =
     let
         ( x, y ) =
@@ -229,17 +246,26 @@ downwardsButton args =
         , Html.Attributes.style "background-color" (View.color args.color)
         ]
         Layout.none
-    , button args.color
-        [ Html.Attributes.style "width" "100px"
-        , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
-        , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
-        , Html.Attributes.style "font-weight" "bold"
-        ]
-        args.onPress
+    , case args.onPress of
+        Just msg ->
+            button args.color
+                [ Html.Attributes.style "width" "100px"
+                , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
+                , Html.Attributes.style "font-weight" "bold"
+                ]
+                msg
+
+        Nothing ->
+            circle args.color
+                [ Html.Attributes.style "width" "100px"
+                , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
+                ]
     ]
 
 
-upwardsBigButton : { color : Color, pos : ( Int, Int ), onPress : msg } -> List (Html msg)
+upwardsBigButton : { color : Color, pos : ( Int, Int ), onPress : Maybe msg } -> List (Html msg)
 upwardsBigButton args =
     let
         ( x, y ) =
@@ -254,17 +280,26 @@ upwardsBigButton args =
         , Html.Attributes.style "background-color" (View.color args.color)
         ]
         Layout.none
-    , button args.color
-        [ Html.Attributes.style "width" "200px"
-        , Html.Attributes.style "top" (String.fromInt (y - 100) ++ "px")
-        , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
-        , Html.Attributes.class "font-size-big"
-        ]
-        args.onPress
+    , case args.onPress of
+        Just msg ->
+            button args.color
+                [ Html.Attributes.style "width" "200px"
+                , Html.Attributes.style "top" (String.fromInt (y - 100) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
+                , Html.Attributes.class "font-size-big"
+                ]
+                msg
+
+        Nothing ->
+            circle args.color
+                [ Html.Attributes.style "width" "200px"
+                , Html.Attributes.style "top" (String.fromInt (y - 100) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
+                ]
     ]
 
 
-upwardsButton : { color : Color, pos : ( Int, Int ), onPress : msg } -> List (Html msg)
+upwardsButton : { color : Color, pos : ( Int, Int ), onPress : Maybe msg } -> List (Html msg)
 upwardsButton args =
     let
         ( x, y ) =
@@ -279,11 +314,20 @@ upwardsButton args =
         , Html.Attributes.style "background-color" (View.color args.color)
         ]
         Layout.none
-    , button args.color
-        [ Html.Attributes.style "width" "100px"
-        , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
-        , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
-        , Html.Attributes.style "font-weight" "bold"
-        ]
-        args.onPress
+    , case args.onPress of
+        Just msg ->
+            button args.color
+                [ Html.Attributes.style "width" "100px"
+                , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
+                , Html.Attributes.style "font-weight" "bold"
+                ]
+                msg
+
+        Nothing ->
+            circle args.color
+                [ Html.Attributes.style "width" "100px"
+                , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
+                ]
     ]

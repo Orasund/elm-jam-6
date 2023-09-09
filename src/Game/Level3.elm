@@ -42,6 +42,7 @@ toHtml args =
                     [ 1, 2, 3 ]
                 )
                     |> args.onPress
+                    |> Just
             }
         ++ [ [ View.Level.upwardsHalfCircle
                 { color = Yellow
@@ -54,26 +55,12 @@ toHtml args =
                     , visible = Set.member 1 args.areas
                     , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 - 100 )
                     }
-           ]
-        ++ [ [ View.Level.upwardsHalfCircle
+           , [ View.Level.upwardsHalfCircle
                 { color = Blue
                 , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
                 , radius = Config.screenMinWidth // 2
                 }
-             , Layout.textButton
-                [ Html.Attributes.style "background-color" "var(--trinary-color)"
-                , Html.Attributes.style "aspect-ratio" "1"
-                , Html.Attributes.style "color" "white"
-                , Html.Attributes.style "font-weight" "bold"
-                , Html.Attributes.style "width" "100px"
-                , Html.Attributes.style "border-radius" "100%"
-                , Html.Attributes.style "position" "absolute"
-                , Html.Attributes.style "top" (String.fromInt (Config.screenMinHeight // 2 - 150) ++ "px")
-                , Html.Attributes.style "left" (String.fromInt (Config.screenMinWidth // 2 - 50) ++ "px")
-                ]
-                { label = "Reset"
-                , onPress = args.reset |> Just
-                }
+             , reset args.reset
              ]
                 |> View.Level.area
                     { transition = Set.member 2 args.transitioningArea
@@ -92,6 +79,7 @@ toHtml args =
                     [ 0, 2, 1 ]
                 )
                     |> args.onPress
+                    |> Just
             }
         ++ [ [ View.Level.downwardsHalfCircle
                 { color = Blue
@@ -110,6 +98,7 @@ toHtml args =
                 , onPress =
                     [ 0, 1, 2, 3, 4 ]
                         |> args.onPress
+                        |> Just
                 }
                 |> View.Level.area
                     { transition = Set.member 3 args.transitioningArea
@@ -123,3 +112,21 @@ toHtml args =
                     , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
                     }
            ]
+
+
+reset : msg -> Html msg
+reset onPress =
+    Layout.textButton
+        [ Html.Attributes.style "background-color" "var(--trinary-color)"
+        , Html.Attributes.style "aspect-ratio" "1"
+        , Html.Attributes.style "color" "white"
+        , Html.Attributes.style "font-weight" "bold"
+        , Html.Attributes.style "width" "100px"
+        , Html.Attributes.style "border-radius" "100%"
+        , Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "top" (String.fromInt (Config.screenMinHeight // 2 - 150) ++ "px")
+        , Html.Attributes.style "left" (String.fromInt (Config.screenMinWidth // 2 - 50) ++ "px")
+        ]
+        { label = "Reset"
+        , onPress = onPress |> Just
+        }

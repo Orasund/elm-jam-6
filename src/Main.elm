@@ -46,7 +46,7 @@ apply { seed } generator =
 init : () -> ( Model, Cmd Msg )
 init () =
     ( { game =
-            Level.toGame 3
+            Level.toGame 4
                 |> Maybe.withDefault Game.empty
       , seed = Random.initialSeed 42
       , overlay = Nothing
@@ -104,7 +104,7 @@ setState list model =
         | game = game
       }
     , if Game.isCleared game then
-        Process.sleep 6000
+        Process.sleep 4000
             |> Task.perform (\() -> ClearedLevel)
 
       else
