@@ -16,7 +16,9 @@ viewportMeta =
     in
     Html.node "meta"
         [ Html.Attributes.name "viewport"
-        , Html.Attributes.attribute "content" ("initial-scale=1,user-scalable=no,width=" ++ width)
+        , Html.Attributes.attribute "content" ("user-scalable=no,width=" ++ width)
+
+        --  , Html.Attributes.attribute "content" ("initial-scale=1,user-scalable=no,width=" ++ width)
         ]
         []
 

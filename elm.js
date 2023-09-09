@@ -6704,7 +6704,7 @@ var $author$project$View$viewportMeta = function () {
 		_List_fromArray(
 			[
 				$elm$html$Html$Attributes$name('viewport'),
-				A2($elm$html$Html$Attributes$attribute, 'content', 'initial-scale=1,user-scalable=no,width=' + width)
+				A2($elm$html$Html$Attributes$attribute, 'content', 'user-scalable=no,width=' + width)
 			]),
 		_List_Nil);
 }();
