@@ -29,14 +29,14 @@ area attrs args =
     Html.div
         ((if args.transition then
             [ Html.Attributes.class "areaTransition"
+            , Html.Attributes.style "height" "100%"
+            , Html.Attributes.style "width" "100%"
             ]
 
           else
             []
          )
             ++ [ Html.Attributes.style "position" "absolute"
-               , Html.Attributes.style "height" "100%"
-               , Html.Attributes.style "width" "100%"
                , "circle("
                     ++ (if args.visible then
                             String.fromFloat Config.screenMinHeight

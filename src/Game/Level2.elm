@@ -12,7 +12,7 @@ import View.Level
 
 def : LevelDef msg
 def =
-    { init = Set.fromList [ 0, 1 ]
+    { init = Set.fromList [ 1, 2 ]
     , toHtml = toHtml
     }
 
@@ -52,22 +52,27 @@ toHtml args =
             args.transitioningArea == Just 0
     in
     [ View.Level.base Blue
-    , [ firstSquare Yellow
-      , leftPath Yellow
-      , leftButton Yellow (args.onPress 1)
+    , buttomSquare Yellow
+    , leftPath Yellow
+    , leftButton Yellow (args.onPress 1)
+    , [ leftSquare Blue
       ]
-        |> View.Level.area
-            []
-            { transition = False
-            , visible = Set.member 1 args.areas
+        |> View.Level.area []
+            { transition = args.transitioningArea == Just 1
+            , visible = Set.member 1 args.areas |> not
             , center = ( 75, 275 )
             }
-    , secondSquare Yellow
+    , [ rightSquare Blue ]
+        |> View.Level.area []
+            { transition = args.transitioningArea == Just 2
+            , visible = Set.member 2 args.areas |> not
+            , center = ( 75, 275 )
+            }
     , toggle
         { color = backColor
         , areas = args.areas
         , area = 0
-        , onPress = args.onPress
+        , onPress = args.onPress |> Just
         , transition = False
         , visible = True
         , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
@@ -76,7 +81,7 @@ toHtml args =
         { color = frontColor
         , areas = args.areas
         , area = 0
-        , onPress = args.onPress
+        , onPress = Nothing
         , transition = transitiningFirst
         , visible = transitiningFirst
         , center =
@@ -89,13 +94,15 @@ toHtml args =
     ]
 
 
-toggle : { color : Color, area : Int, areas : Set Int, onPress : Int -> msg, transition : Bool, visible : Bool, center : ( Int, Int ) } -> Html msg
+toggle : { color : Color, area : Int, areas : Set Int, onPress : Maybe (Int -> msg), transition : Bool, visible : Bool, center : ( Int, Int ) } -> Html msg
 toggle args =
     case args.color of
         Blue ->
             [ secondCircle Blue
             , path Blue
-            , firstButton Blue (args.onPress args.area)
+            , args.onPress
+                |> Maybe.map (\f -> firstButton Blue (f args.area))
+                |> Maybe.withDefault (firstCircle Blue)
             ]
                 |> View.Level.area []
                     { transition = args.transition
@@ -104,7 +111,9 @@ toggle args =
                     }
 
         Yellow ->
-            [ secondButton Yellow (args.onPress args.area)
+            [ args.onPress
+                |> Maybe.map (\f -> secondButton Yellow (f args.area))
+                |> Maybe.withDefault (secondCircle Yellow)
             , path Yellow
             , firstCircle Yellow
             ]
@@ -119,7 +128,7 @@ firstButton : Color -> msg -> Html msg
 firstButton bool =
     View.Level.button bool
         [ Html.Attributes.style "width" "200px"
-        , Html.Attributes.style "bottom" "75px"
+        , Html.Attributes.style "top" "425px"
         , Html.Attributes.style "left" "100px"
         , Html.Attributes.class "font-size-big"
         ]
@@ -129,7 +138,7 @@ firstCircle : Color -> Html msg
 firstCircle bool =
     View.Level.circle bool
         [ Html.Attributes.style "width" "200px"
-        , Html.Attributes.style "bottom" "75px"
+        , Html.Attributes.style "top" "425px"
         , Html.Attributes.style "left" "100px"
         ]
 
@@ -139,7 +148,7 @@ secondButton bool =
     View.Level.button bool
         [ Html.Attributes.style "width" "200px"
         , Html.Attributes.style "top" "75px"
-        , Html.Attributes.style "left" "25%"
+        , Html.Attributes.style "left" "100px"
         , Html.Attributes.class "font-size-big"
         ]
 
@@ -149,7 +158,7 @@ secondCircle bool =
     View.Level.circle bool
         [ Html.Attributes.style "width" "200px"
         , Html.Attributes.style "top" "75px"
-        , Html.Attributes.style "left" "25%"
+        , Html.Attributes.style "left" "100px"
         ]
 
 
@@ -188,26 +197,38 @@ leftPath bool =
         Layout.none
 
 
-firstSquare : Color -> Html msg
-firstSquare bool =
+buttomSquare : Color -> Html msg
+buttomSquare color =
     Layout.el
         [ Html.Attributes.style "position" "absolute"
-        , Html.Attributes.style "top" "50%"
-        , Html.Attributes.style "height" "50%"
-        , Html.Attributes.style "width" "50%"
+        , Html.Attributes.style "top" "350px"
+        , Html.Attributes.style "height" "350px"
+        , Html.Attributes.style "width" "400px"
+        , Html.Attributes.style "background-color" (View.color color)
+        ]
+        Layout.none
+
+
+leftSquare : Color -> Html msg
+leftSquare bool =
+    Layout.el
+        [ Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "top" "0px"
+        , Html.Attributes.style "height" "700px"
+        , Html.Attributes.style "width" "200px"
         , Html.Attributes.style "background-color" (View.color bool)
         ]
         Layout.none
 
 
-secondSquare : Color -> Html msg
-secondSquare bool =
+rightSquare : Color -> Html msg
+rightSquare bool =
     Layout.el
         [ Html.Attributes.style "position" "absolute"
-        , Html.Attributes.style "top" "50%"
-        , Html.Attributes.style "left" "50%"
-        , Html.Attributes.style "height" "50%"
-        , Html.Attributes.style "width" "50%"
+        , Html.Attributes.style "top" "0px"
+        , Html.Attributes.style "left" "200px"
+        , Html.Attributes.style "height" "700px"
+        , Html.Attributes.style "width" "200px"
         , Html.Attributes.style "background-color" (View.color bool)
         ]
         Layout.none

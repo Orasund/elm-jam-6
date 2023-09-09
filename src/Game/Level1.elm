@@ -58,7 +58,7 @@ firstButton : Color -> msg -> Html msg
 firstButton bool =
     View.Level.button bool
         [ Html.Attributes.style "width" "200px"
-        , Html.Attributes.style "bottom" "75px"
+        , Html.Attributes.style "top" "425px"
         , Html.Attributes.style "left" "100px"
         , Html.Attributes.class "font-size-big"
         ]
@@ -69,7 +69,7 @@ secondButton bool =
     View.Level.button bool
         [ Html.Attributes.style "width" "200px"
         , Html.Attributes.style "top" "75px"
-        , Html.Attributes.style "left" "25%"
+        , Html.Attributes.style "left" "100px"
         , Html.Attributes.class "font-size-big"
         ]
 
@@ -90,8 +90,8 @@ path bool =
 firstArea : Color -> Html msg
 firstArea bool =
     Layout.el
-        [ Html.Attributes.style "height" "50%"
-        , Html.Attributes.style "width" "100%"
+        [ Html.Attributes.style "height" "350px"
+        , Html.Attributes.style "width" "400px"
         , Html.Attributes.style "background-color" (View.color bool)
         ]
         Layout.none
@@ -101,9 +101,9 @@ secondArea : Color -> Html msg
 secondArea bool =
     Layout.el
         [ Html.Attributes.style "position" "absolute"
-        , Html.Attributes.style "top" "50%"
-        , Html.Attributes.style "height" "50%"
-        , Html.Attributes.style "width" "100%"
+        , Html.Attributes.style "top" "350px"
+        , Html.Attributes.style "height" "350px"
+        , Html.Attributes.style "width" "400px"
         , Html.Attributes.style "background-color" (View.color bool)
         ]
         Layout.none
