@@ -83,6 +83,22 @@ button:active {
     filter: drop-shadow(0px 2px 0px rgba(0, 0, 0, 0));
 }
 
+.diapears {
+    clip-path: circle(0%);
+    animation-name: disapear;
+    animation-duration: 2s;
+}
+
+@keyframes disapear {
+    from {
+        clip-path: circle(100%);
+    }
+
+    to {
+        clip-path: circle(0%);
+    }
+}
+
 
 /***************************************************
  * UTILITY CLASSES

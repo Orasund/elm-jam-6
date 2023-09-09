@@ -30,7 +30,7 @@ type Msg
     | StartTransition (List Int)
     | EndTransition
     | SetState (List Int)
-    | LevelCleared
+    | ClearedLevel
 
 
 apply : Model -> Generator Model -> Model
@@ -99,10 +99,12 @@ setState list model =
             list
                 |> List.foldl Game.applyButton model.game
     in
-    ( { model | game = game }
+    ( { model
+        | game = game
+      }
     , if Game.isCleared game then
         Process.sleep 6000
-            |> Task.perform (\() -> LevelCleared)
+            |> Task.perform (\() -> ClearedLevel)
 
       else
         Process.sleep 4000
@@ -117,6 +119,7 @@ levelCleared model =
             Level.toGame (model.game.level + 1)
                 |> Maybe.withDefault Game.empty
         , transitioningArea = Set.empty
+        , overlay = Just LevelCleared
     }
 
 
@@ -145,7 +148,7 @@ update msg model =
         EndTransition ->
             model |> endTransition |> withNoCmd
 
-        LevelCleared ->
+        ClearedLevel ->
             model |> levelCleared |> withNoCmd
 
 
@@ -158,6 +161,9 @@ viewOverlay _ overlay =
 
         GameEnd ->
             View.Overlay.gameEnd
+
+        LevelCleared ->
+            View.Overlay.levelCleared
 
 
 view :

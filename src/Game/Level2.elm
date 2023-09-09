@@ -72,12 +72,11 @@ toHtml args =
         { color = backColor
         , areas = args.areas
         , onPress =
-            if Set.member 1 args.areas || Set.member 0 args.areas then
-                if Set.member 0 args.areas then
-                    args.onPress [ 0, 2 ] |> Just
+            if Set.member 1 args.areas then
+                args.onPress [ 0 ] |> Just
 
-                else
-                    args.onPress [ 0 ] |> Just
+            else if Set.member 0 args.areas then
+                args.onPress [ 0, 2 ] |> Just
 
             else
                 Nothing

@@ -5965,13 +5965,13 @@ var $author$project$Game$Level2$toHtml = function (args) {
 				areas: args.areas,
 				center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, ($author$project$Config$screenMinHeight / 2) | 0),
 				color: backColor,
-				onPress: (A2($elm$core$Set$member, 1, args.areas) || A2($elm$core$Set$member, 0, args.areas)) ? (A2($elm$core$Set$member, 0, args.areas) ? $elm$core$Maybe$Just(
+				onPress: A2($elm$core$Set$member, 1, args.areas) ? $elm$core$Maybe$Just(
 					args.onPress(
 						_List_fromArray(
-							[0, 2]))) : $elm$core$Maybe$Just(
+							[0]))) : (A2($elm$core$Set$member, 0, args.areas) ? $elm$core$Maybe$Just(
 					args.onPress(
 						_List_fromArray(
-							[0])))) : $elm$core$Maybe$Nothing,
+							[0, 2]))) : $elm$core$Maybe$Nothing),
 				transition: false,
 				visible: true
 			}),
@@ -6044,6 +6044,7 @@ var $author$project$Main$gotSeed = F2(
 			model,
 			{seed: seed});
 	});
+var $author$project$Overlay$LevelCleared = {$: 'LevelCleared'};
 var $author$project$Main$levelCleared = function (model) {
 	return _Utils_update(
 		model,
@@ -6052,6 +6053,7 @@ var $author$project$Main$levelCleared = function (model) {
 				$elm$core$Maybe$withDefault,
 				$author$project$Game$empty,
 				$author$project$Level$toGame(model.game.level + 1)),
+			overlay: $elm$core$Maybe$Just($author$project$Overlay$LevelCleared),
 			transitioningArea: $elm$core$Set$empty
 		});
 };
@@ -6074,8 +6076,8 @@ var $author$project$Main$newGame = function (model) {
 					$author$project$Level$toGame(1))
 			}));
 };
+var $author$project$Main$ClearedLevel = {$: 'ClearedLevel'};
 var $author$project$Main$EndTransition = {$: 'EndTransition'};
-var $author$project$Main$LevelCleared = {$: 'LevelCleared'};
 var $elm$core$Debug$log = _Debug_log;
 var $elm$core$Dict$getMin = function (dict) {
 	getMin:
@@ -6482,7 +6484,7 @@ var $author$project$Main$setState = F2(
 			$author$project$Game$isCleared(game) ? A2(
 				$elm$core$Task$perform,
 				function (_v0) {
-					return $author$project$Main$LevelCleared;
+					return $author$project$Main$ClearedLevel;
 				},
 				$elm$core$Process$sleep(6000)) : A2(
 				$elm$core$Task$perform,
@@ -6666,13 +6668,26 @@ var $author$project$View$Overlay$gameMenu = function (args) {
 					})
 				])));
 };
+var $author$project$View$Overlay$levelCleared = A2(
+	$author$project$View$Overlay$asFullScreenOverlay,
+	_Utils_ap(
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'background-color', 'var(--secondary-color)'),
+				$elm$html$Html$Attributes$class('diapears')
+			]),
+		$Orasund$elm_layout$Layout$centered),
+	$Orasund$elm_layout$Layout$none);
 var $author$project$Main$viewOverlay = F2(
 	function (_v0, overlay) {
-		if (overlay.$ === 'GameMenu') {
-			return $author$project$View$Overlay$gameMenu(
-				{startGame: $author$project$Main$NewGame});
-		} else {
-			return $author$project$View$Overlay$gameEnd;
+		switch (overlay.$) {
+			case 'GameMenu':
+				return $author$project$View$Overlay$gameMenu(
+					{startGame: $author$project$Main$NewGame});
+			case 'GameEnd':
+				return $author$project$View$Overlay$gameEnd;
+			default:
+				return $author$project$View$Overlay$levelCleared;
 		}
 	});
 var $elm$html$Html$Attributes$name = $elm$html$Html$Attributes$stringProperty('name');

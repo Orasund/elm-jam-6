@@ -45,6 +45,17 @@ gameEnd =
             )
 
 
+levelCleared : Html msg
+levelCleared =
+    Layout.none
+        |> asFullScreenOverlay
+            ([ Html.Attributes.style "background-color" "var(--secondary-color)"
+             , Html.Attributes.class "diapears"
+             ]
+                ++ Layout.centered
+            )
+
+
 asFullScreenOverlay : List (Attribute msg) -> Html msg -> Html msg
 asFullScreenOverlay attrs =
     Layout.el
