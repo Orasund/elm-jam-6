@@ -57,13 +57,13 @@ toHtml args =
     , leftButton Yellow (args.onPress [ 1 ])
     , [ leftSquare Blue
       ]
-        |> View.Level.area []
+        |> View.Level.area
             { transition = Set.member 1 args.transitioningArea
             , visible = Set.member 1 args.areas |> not
             , center = ( 75, 275 )
             }
     , [ rightSquare Blue ]
-        |> View.Level.area []
+        |> View.Level.area
             { transition = Set.member 2 args.transitioningArea
             , visible = Set.member 2 args.areas |> not
             , center = ( 200, 175 )
@@ -110,7 +110,7 @@ toggle args =
                 |> Maybe.map (firstButton Blue)
                 |> Maybe.withDefault (firstCircle Blue)
             ]
-                |> View.Level.area []
+                |> View.Level.area
                     { transition = args.transition
                     , visible = args.visible
                     , center = args.center
@@ -123,7 +123,7 @@ toggle args =
             , path Yellow
             , firstCircle Yellow
             ]
-                |> View.Level.area []
+                |> View.Level.area
                     { transition = args.transition
                     , visible = args.visible
                     , center = args.center

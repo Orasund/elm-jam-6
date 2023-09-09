@@ -25,8 +25,6 @@ toHtml args =
       , firstButton Blue (args.onPress [ 0 ])
       ]
         |> View.Level.area
-            [ Html.Attributes.style "z-index" "1"
-            ]
             { transition = False
             , visible = True
             , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
@@ -36,8 +34,6 @@ toHtml args =
       , secondButton Yellow (args.onPress [ 1 ])
       ]
         |> View.Level.area
-            [ Html.Attributes.style "z-index" "2"
-            ]
             { transition = Set.member 0 args.transitioningArea
             , visible = Set.member 0 args.areas |> not
             , center = ( 200, 525 )
@@ -45,8 +41,6 @@ toHtml args =
     , [ View.Level.base Blue
       ]
         |> View.Level.area
-            [ Html.Attributes.style "z-index" "3"
-            ]
             { transition = Set.member 1 args.transitioningArea
             , visible = Set.member 1 args.areas |> not
             , center = ( 200, 175 )
