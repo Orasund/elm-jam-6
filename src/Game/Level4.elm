@@ -53,7 +53,12 @@ toHtml args =
                 ( Config.screenMinWidth // 2
                 , Config.screenMinHeight // 2 - 200
                 )
-            , onPress = [ 0 ] |> args.onPress |> Just
+            , onPress =
+                if Set.isEmpty args.transitioningArea |> not then
+                    Nothing
+
+                else
+                    [ 0 ] |> args.onPress |> Just
             }
         ++ View.Level.upwardsBigButton
             { color = Yellow
@@ -62,14 +67,18 @@ toHtml args =
                 , Config.screenMinHeight // 2 + 200
                 )
             , onPress =
-                (if Set.member 0 args.areas then
-                    [ 0, 1, 2 ]
+                if Set.isEmpty args.transitioningArea |> not then
+                    Nothing
 
-                 else
-                    [ 1 ]
-                )
-                    |> args.onPress
-                    |> Just
+                else
+                    (if Set.member 0 args.areas then
+                        [ 0, 1, 2 ]
+
+                     else
+                        [ 1 ]
+                    )
+                        |> args.onPress
+                        |> Just
             }
         ++ [ [ View.Level.topHalf Yellow ]
                 |> View.Level.area

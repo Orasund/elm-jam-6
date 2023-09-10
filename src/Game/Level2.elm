@@ -32,14 +32,18 @@ toHtml args =
             { color = Blue
             , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 - 100 )
             , onPress =
-                (if Set.member 2 args.areas then
-                    [ 1 ]
+                if Set.isEmpty args.transitioningArea |> not then
+                    Nothing
 
-                 else
-                    [ 1, 2, 3 ]
-                )
-                    |> args.onPress
-                    |> Just
+                else
+                    (if Set.member 2 args.areas then
+                        [ 1 ]
+
+                     else
+                        [ 1, 2, 3 ]
+                    )
+                        |> args.onPress
+                        |> Just
             }
         ++ [ [ View.Level.upwardsHalfCircle
                 { color = Yellow
@@ -72,14 +76,18 @@ toHtml args =
             { color = Yellow
             , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 100 )
             , onPress =
-                (if Set.member 1 args.areas |> not then
-                    [ 2 ]
+                if Set.isEmpty args.transitioningArea |> not then
+                    Nothing
 
-                 else
-                    [ 0, 2, 1 ]
-                )
-                    |> args.onPress
-                    |> Just
+                else
+                    (if Set.member 1 args.areas |> not then
+                        [ 2 ]
+
+                     else
+                        [ 0, 2, 1 ]
+                    )
+                        |> args.onPress
+                        |> Just
             }
         ++ [ [ View.Level.downwardsHalfCircle
                 { color = Blue
@@ -96,9 +104,13 @@ toHtml args =
                 { color = Yellow
                 , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
                 , onPress =
-                    [ 0, 1, 2, 3, 4 ]
-                        |> args.onPress
-                        |> Just
+                    if Set.isEmpty args.transitioningArea |> not then
+                        Nothing
+
+                    else
+                        [ 0, 1, 2, 3, 4 ]
+                            |> args.onPress
+                            |> Just
                 }
                 |> View.Level.area
                     { transition = Set.member 3 args.transitioningArea

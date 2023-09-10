@@ -5626,6 +5626,17 @@ var $author$project$View$Level$downwardsBigButton = function (args) {
 		}()
 		]);
 };
+var $elm$core$Dict$isEmpty = function (dict) {
+	if (dict.$ === 'RBEmpty_elm_builtin') {
+		return true;
+	} else {
+		return false;
+	}
+};
+var $elm$core$Set$isEmpty = function (_v0) {
+	var dict = _v0.a;
+	return $elm$core$Dict$isEmpty(dict);
+};
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
@@ -5728,7 +5739,7 @@ var $author$project$Game$Level0$toHtml = function (args) {
 			$author$project$View$Level$downwardsBigButton(
 				{
 					color: $author$project$Game$Yellow,
-					onPress: $elm$core$Maybe$Just(
+					onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 						args.onPress(
 							_List_fromArray(
 								[0]))),
@@ -6219,7 +6230,7 @@ var $author$project$Game$Level2$toHtml = function (args) {
 			$author$project$View$Level$downwardsButton(
 				{
 					color: $author$project$Game$Blue,
-					onPress: $elm$core$Maybe$Just(
+					onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 						args.onPress(
 							A2($elm$core$Set$member, 2, args.areas) ? _List_fromArray(
 								[1]) : _List_fromArray(
@@ -6271,7 +6282,7 @@ var $author$project$Game$Level2$toHtml = function (args) {
 					$author$project$View$Level$upwardsButton(
 						{
 							color: $author$project$Game$Yellow,
-							onPress: $elm$core$Maybe$Just(
+							onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 								args.onPress(
 									(!A2($elm$core$Set$member, 1, args.areas)) ? _List_fromArray(
 										[2]) : _List_fromArray(
@@ -6306,7 +6317,7 @@ var $author$project$Game$Level2$toHtml = function (args) {
 							$author$project$View$Level$downwardsHugeButton(
 								{
 									color: $author$project$Game$Yellow,
-									onPress: $elm$core$Maybe$Just(
+									onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 										args.onPress(
 											_List_fromArray(
 												[0, 1, 2, 3, 4]))),
@@ -6505,17 +6516,17 @@ var $author$project$Game$Level3$toHtml = function (args) {
 			$author$project$View$Level$upwardsBigButton(
 				{
 					color: $author$project$Game$Blue,
-					onPress: (A2($elm$core$Set$member, 3, args.areas) && A2($elm$core$Set$member, 4, args.areas)) ? $elm$core$Maybe$Just(
+					onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : ((A2($elm$core$Set$member, 3, args.areas) && A2($elm$core$Set$member, 4, args.areas)) ? $elm$core$Maybe$Just(
 						args.onPress(
 							_List_fromArray(
-								[2, 1]))) : $elm$core$Maybe$Nothing,
+								[2, 1]))) : $elm$core$Maybe$Nothing),
 					pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200)
 				}),
 			_Utils_ap(
 				$author$project$View$Level$downwardsButton(
 					{
 						color: $author$project$Game$Yellow,
-						onPress: $elm$core$Maybe$Just(
+						onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 							args.onPress(
 								_List_fromArray(
 									[3]))),
@@ -6525,7 +6536,7 @@ var $author$project$Game$Level3$toHtml = function (args) {
 					$author$project$View$Level$downwardsButton(
 						{
 							color: $author$project$Game$Yellow,
-							onPress: $elm$core$Maybe$Just(
+							onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 								args.onPress(
 									_List_fromArray(
 										[4]))),
@@ -6579,10 +6590,10 @@ var $author$project$Game$Level3$toHtml = function (args) {
 										$author$project$View$Level$upwardsBigButton(
 										{
 											color: $author$project$Game$Yellow,
-											onPress: ((!A2($elm$core$Set$member, 3, args.areas)) && (!A2($elm$core$Set$member, 4, args.areas))) ? $elm$core$Maybe$Just(
+											onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : (((!A2($elm$core$Set$member, 3, args.areas)) && (!A2($elm$core$Set$member, 4, args.areas))) ? $elm$core$Maybe$Just(
 												args.onPress(
 													_List_fromArray(
-														[0, 1, 2]))) : $elm$core$Maybe$Nothing,
+														[0, 1, 2]))) : $elm$core$Maybe$Nothing),
 											pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200)
 										})
 									]))),
@@ -6680,7 +6691,7 @@ var $author$project$Game$Level4$toHtml = function (args) {
 					$author$project$View$Level$upwardsButton(
 						{
 							color: $author$project$Game$Blue,
-							onPress: $elm$core$Maybe$Just(
+							onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 								args.onPress(
 									_List_fromArray(
 										[0]))),
@@ -6690,7 +6701,7 @@ var $author$project$Game$Level4$toHtml = function (args) {
 						$author$project$View$Level$upwardsBigButton(
 							{
 								color: $author$project$Game$Yellow,
-								onPress: $elm$core$Maybe$Just(
+								onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
 									args.onPress(
 										A2($elm$core$Set$member, 0, args.areas) ? _List_fromArray(
 											[0, 1, 2]) : _List_fromArray(
@@ -7255,17 +7266,6 @@ var $author$project$Game$applyButton = F2(
 				'areas',
 				A2($elm$core$Set$member, i, game.areas) ? A2($elm$core$Set$remove, i, game.areas) : A2($elm$core$Set$insert, i, game.areas)));
 	});
-var $elm$core$Dict$isEmpty = function (dict) {
-	if (dict.$ === 'RBEmpty_elm_builtin') {
-		return true;
-	} else {
-		return false;
-	}
-};
-var $elm$core$Set$isEmpty = function (_v0) {
-	var dict = _v0.a;
-	return $elm$core$Dict$isEmpty(dict);
-};
 var $author$project$Game$isCleared = function (game) {
 	return $elm$core$Set$isEmpty(game.areas);
 };

@@ -27,7 +27,10 @@ toHtml args =
             { color = Blue
             , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 200 )
             , onPress =
-                if Set.member 3 args.areas && Set.member 4 args.areas then
+                if Set.isEmpty args.transitioningArea |> not then
+                    Nothing
+
+                else if Set.member 3 args.areas && Set.member 4 args.areas then
                     args.onPress [ 2, 1 ] |> Just
 
                 else
@@ -36,12 +39,22 @@ toHtml args =
         ++ View.Level.downwardsButton
             { color = Yellow
             , pos = ( 75, Config.screenMinHeight // 2 - 100 )
-            , onPress = args.onPress [ 3 ] |> Just
+            , onPress =
+                if Set.isEmpty args.transitioningArea |> not then
+                    Nothing
+
+                else
+                    args.onPress [ 3 ] |> Just
             }
         ++ View.Level.downwardsButton
             { color = Yellow
             , pos = ( Config.screenMinWidth - 75, Config.screenMinHeight // 2 - 100 )
-            , onPress = args.onPress [ 4 ] |> Just
+            , onPress =
+                if Set.isEmpty args.transitioningArea |> not then
+                    Nothing
+
+                else
+                    args.onPress [ 4 ] |> Just
             }
         ++ [ [ leftSquare Blue ]
                 |> View.Level.area
@@ -68,7 +81,10 @@ toHtml args =
                 { color = Yellow
                 , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 200 )
                 , onPress =
-                    if (Set.member 3 args.areas |> not) && (Set.member 4 args.areas |> not) then
+                    if Set.isEmpty args.transitioningArea |> not then
+                        Nothing
+
+                    else if (Set.member 3 args.areas |> not) && (Set.member 4 args.areas |> not) then
                         [ 0, 1, 2 ] |> args.onPress |> Just
 
                     else

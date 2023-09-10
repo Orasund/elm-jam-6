@@ -55,7 +55,12 @@ toHtml args =
                 ( Config.screenMinWidth // 2
                 , Config.screenMinHeight - 200
                 )
-            , onPress = args.onPress [ 0 ] |> Just
+            , onPress =
+                if Set.isEmpty args.transitioningArea |> not then
+                    Nothing
+
+                else
+                    args.onPress [ 0 ] |> Just
             }
         ++ [ [ View.Level.base Blue ]
                 |> View.Level.area
