@@ -1,6 +1,7 @@
 module Level exposing (..)
 
 import Game exposing (Game, LevelDef)
+import Game.Level0
 import Game.Level1
 import Game.Level2
 import Game.Level3
@@ -13,17 +14,20 @@ fromInt : Int -> Maybe (LevelDef msg)
 fromInt int =
     case int of
         1 ->
-            Game.Level1.def |> Just
+            Game.Level0.def |> Just
 
         2 ->
-            Game.Level4.def |> Just
+            Game.Level1.def |> Just
 
-        --  Game.Level2.def |> Just
         3 ->
+            Game.Level2.def |> Just
+
+        4 ->
             Game.Level3.def |> Just
 
-        {--4 ->
-            Game.Level4.def |> Just--}
+        5 ->
+            Game.Level4.def |> Just
+
         _ ->
             Nothing
 

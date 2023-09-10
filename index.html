@@ -3,13 +3,22 @@
 <head>
     <link rel="stylesheet" href="assets/main.css">
     <script src="elm.js"></script>
+    <script src="assets/howler.js"></script>
 </head>
 
 <body>
     <main></main>
     <script>
+        const newHowl = (source) => new Howl({ src: [source] })
+
+        // Setup the new Howl.
+        const sounds = {
+            buttonPress: newHowl('assets/sounds/buttonPress.mp3')
+        };
+
         var app = Elm.Main.init({ node: document.querySelector('main') })
-    // you can use ports and stuff here
+
+        app.ports.playSound.subscribe((name) => sounds[name].play());
     </script>
 </body>
 

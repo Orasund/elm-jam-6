@@ -53,18 +53,24 @@ area args =
         )
 
 
-circle : Color -> List (Attribute msg) -> Html msg
-circle bool attrs =
+circle : { color : Color, pos : ( Int, Int ), radius : Int } -> Html msg
+circle args =
+    let
+        ( x, y ) =
+            args.pos
+    in
     Layout.el
-        ([ Html.Attributes.style "aspect-ratio" "1"
-         , Html.Attributes.style "position" "absolute"
-         , Html.Attributes.style "border-radius" "100%"
-         , Html.Attributes.class "font-size-big"
-         , Html.Attributes.style "background-color" (View.color bool)
-         , Html.Attributes.style "color" (View.negColor bool)
-         ]
-            ++ attrs
-        )
+        [ Html.Attributes.style "aspect-ratio" "1"
+        , Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "border-radius" "100%"
+        , Html.Attributes.class "font-size-big"
+        , Html.Attributes.style "background-color" (View.color args.color)
+        , Html.Attributes.style "color" (View.negColor args.color)
+        , Html.Attributes.style "left" (String.fromInt (x - args.radius) ++ "px")
+        , Html.Attributes.style "top" (String.fromInt (y - args.radius) ++ "px")
+        , Html.Attributes.style "height" (String.fromInt (args.radius * 2) ++ "px")
+        , Html.Attributes.style "width" (String.fromInt (args.radius * 2) ++ "px")
+        ]
         Layout.none
 
 
@@ -147,6 +153,19 @@ bottomHalf color =
         Layout.none
 
 
+topHalf : Color -> Html msg
+topHalf color =
+    Layout.el
+        [ Html.Attributes.style "width" (String.fromInt Config.screenMinWidth ++ "px")
+        , Html.Attributes.style "height" (String.fromInt (Config.screenMinHeight // 2) ++ "px")
+        , Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "top" "0"
+        , Html.Attributes.style "left" "0"
+        , Html.Attributes.style "background-color" (View.color color)
+        ]
+        Layout.none
+
+
 button : Color -> List (Attribute msg) -> msg -> Html msg
 button bool attrs onPress =
     Layout.textButton
@@ -189,11 +208,11 @@ downwardsBigButton args =
                 msg
 
         Nothing ->
-            circle args.color
-                [ Html.Attributes.style "width" "200px"
-                , Html.Attributes.style "top" (String.fromInt (y - 100) ++ "px")
-                , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
-                ]
+            circle
+                { color = args.color
+                , radius = 100
+                , pos = ( x, y )
+                }
     ]
 
 
@@ -218,16 +237,16 @@ downwardsHugeButton args =
                 [ Html.Attributes.style "width" "400px"
                 , Html.Attributes.style "top" (String.fromInt (y - 200) ++ "px")
                 , Html.Attributes.style "left" (String.fromInt (x - 200) ++ "px")
-                , Html.Attributes.class "font-size-big"
+                , Html.Attributes.class "font-size-title"
                 ]
                 msg
 
         Nothing ->
-            circle args.color
-                [ Html.Attributes.style "width" "400px"
-                , Html.Attributes.style "top" (String.fromInt (y - 200) ++ "px")
-                , Html.Attributes.style "left" (String.fromInt (x - 200) ++ "px")
-                ]
+            circle
+                { color = args.color
+                , radius = 200
+                , pos = ( x, y )
+                }
     ]
 
 
@@ -257,11 +276,11 @@ downwardsButton args =
                 msg
 
         Nothing ->
-            circle args.color
-                [ Html.Attributes.style "width" "100px"
-                , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
-                , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
-                ]
+            circle
+                { color = args.color
+                , radius = 50
+                , pos = ( x, y )
+                }
     ]
 
 
@@ -291,11 +310,11 @@ upwardsBigButton args =
                 msg
 
         Nothing ->
-            circle args.color
-                [ Html.Attributes.style "width" "200px"
-                , Html.Attributes.style "top" (String.fromInt (y - 100) ++ "px")
-                , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
-                ]
+            circle
+                { color = args.color
+                , radius = 100
+                , pos = ( x, y )
+                }
     ]
 
 
@@ -325,9 +344,99 @@ upwardsButton args =
                 msg
 
         Nothing ->
-            circle args.color
+            circle
+                { color = args.color
+                , radius = 50
+                , pos = ( x, y )
+                }
+    ]
+
+
+leftwardsButton : { color : Color, pos : ( Int, Int ), onPress : Maybe msg } -> List (Html msg)
+leftwardsButton args =
+    let
+        ( x, y ) =
+            args.pos
+    in
+    [ Layout.el
+        [ Html.Attributes.style "width" "100px"
+        , Html.Attributes.style "height" "50px"
+        , Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "top" (String.fromInt (y - 25) ++ "px")
+        , Html.Attributes.style "left" (String.fromInt (x - 100) ++ "px")
+        , Html.Attributes.style "background-color" (View.color args.color)
+        ]
+        Layout.none
+    , case args.onPress of
+        Just msg ->
+            button args.color
                 [ Html.Attributes.style "width" "100px"
                 , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
                 , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
+                , Html.Attributes.style "font-weight" "bold"
                 ]
+                msg
+
+        Nothing ->
+            circle
+                { color = args.color
+                , radius = 50
+                , pos = ( x, y )
+                }
     ]
+
+
+rightwardsButton : { color : Color, pos : ( Int, Int ), onPress : Maybe msg } -> List (Html msg)
+rightwardsButton args =
+    let
+        ( x, y ) =
+            args.pos
+    in
+    [ Layout.el
+        [ Html.Attributes.style "width" "100px"
+        , Html.Attributes.style "height" "50px"
+        , Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "top" (String.fromInt (y - 25) ++ "px")
+        , Html.Attributes.style "left" (String.fromInt x ++ "px")
+        , Html.Attributes.style "background-color" (View.color args.color)
+        ]
+        Layout.none
+    , case args.onPress of
+        Just msg ->
+            button args.color
+                [ Html.Attributes.style "width" "100px"
+                , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
+                , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
+                , Html.Attributes.style "font-weight" "bold"
+                ]
+                msg
+
+        Nothing ->
+            circle
+                { color = args.color
+                , radius = 50
+                , pos = ( x, y )
+                }
+    ]
+
+
+reset : { pos : ( Int, Int ), onPress : msg } -> Html msg
+reset args =
+    let
+        ( x, y ) =
+            args.pos
+    in
+    Layout.textButton
+        [ Html.Attributes.style "background-color" "var(--trinary-color)"
+        , Html.Attributes.style "aspect-ratio" "1"
+        , Html.Attributes.style "color" "white"
+        , Html.Attributes.style "font-weight" "bold"
+        , Html.Attributes.style "width" "100px"
+        , Html.Attributes.style "border-radius" "100%"
+        , Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "top" (String.fromInt (y - 50) ++ "px")
+        , Html.Attributes.style "left" (String.fromInt (x - 50) ++ "px")
+        ]
+        { label = "Reset"
+        , onPress = args.onPress |> Just
+        }

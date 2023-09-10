@@ -5418,20 +5418,6 @@ var $author$project$View$Level$base = function (bool) {
 			]),
 		$Orasund$elm_layout$Layout$none);
 };
-var $author$project$Game$Level1$firstArea = function (bool) {
-	return A2(
-		$Orasund$elm_layout$Layout$el,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'height', '350px'),
-				A2($elm$html$Html$Attributes$style, 'width', '400px'),
-				A2(
-				$elm$html$Html$Attributes$style,
-				'background-color',
-				$author$project$View$color(bool))
-			]),
-		$Orasund$elm_layout$Layout$none);
-};
 var $author$project$View$negColor = function (bool) {
 	if (bool.$ === 'Blue') {
 		return $author$project$View$boolColor(false);
@@ -5542,17 +5528,103 @@ var $author$project$View$Level$button = F3(
 				onPress: $elm$core$Maybe$Just(onPress)
 			});
 	});
-var $author$project$Game$Level1$firstButton = function (bool) {
+var $author$project$View$Level$circle = function (args) {
+	var _v0 = args.pos;
+	var x = _v0.a;
+	var y = _v0.b;
 	return A2(
-		$author$project$View$Level$button,
-		bool,
+		$Orasund$elm_layout$Layout$el,
 		_List_fromArray(
 			[
-				A2($elm$html$Html$Attributes$style, 'width', '200px'),
-				A2($elm$html$Html$Attributes$style, 'top', '425px'),
-				A2($elm$html$Html$Attributes$style, 'left', '100px'),
-				$elm$html$Html$Attributes$class('font-size-big')
-			]));
+				A2($elm$html$Html$Attributes$style, 'aspect-ratio', '1'),
+				A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+				A2($elm$html$Html$Attributes$style, 'border-radius', '100%'),
+				$elm$html$Html$Attributes$class('font-size-big'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'background-color',
+				$author$project$View$color(args.color)),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'color',
+				$author$project$View$negColor(args.color)),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'left',
+				$elm$core$String$fromInt(x - args.radius) + 'px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'top',
+				$elm$core$String$fromInt(y - args.radius) + 'px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'height',
+				$elm$core$String$fromInt(args.radius * 2) + 'px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'width',
+				$elm$core$String$fromInt(args.radius * 2) + 'px')
+			]),
+		$Orasund$elm_layout$Layout$none);
+};
+var $author$project$View$Level$downwardsBigButton = function (args) {
+	var _v0 = args.pos;
+	var x = _v0.a;
+	var y = _v0.b;
+	return _List_fromArray(
+		[
+			A2(
+			$Orasund$elm_layout$Layout$el,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'width', '100px'),
+					A2($elm$html$Html$Attributes$style, 'height', '200px'),
+					A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'top',
+					$elm$core$String$fromInt(y) + 'px'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'left',
+					$elm$core$String$fromInt(x - 50) + 'px'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'background-color',
+					$author$project$View$color(args.color))
+				]),
+			$Orasund$elm_layout$Layout$none),
+			function () {
+			var _v1 = args.onPress;
+			if (_v1.$ === 'Just') {
+				var msg = _v1.a;
+				return A3(
+					$author$project$View$Level$button,
+					args.color,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'width', '200px'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'top',
+							$elm$core$String$fromInt(y - 100) + 'px'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'left',
+							$elm$core$String$fromInt(x - 100) + 'px'),
+							$elm$html$Html$Attributes$class('font-size-big')
+						]),
+					msg);
+			} else {
+				return $author$project$View$Level$circle(
+					{
+						color: args.color,
+						pos: _Utils_Tuple2(x, y),
+						radius: 100
+					});
+			}
+		}()
+		]);
 };
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
@@ -5600,6 +5672,115 @@ var $elm$core$Set$member = F2(
 		return A2($elm$core$Dict$member, key, dict);
 	});
 var $elm$core$Basics$not = _Basics_not;
+var $author$project$Config$screenMinWidth = 400;
+var $Orasund$elm_layout$Layout$text = F2(
+	function (attrs, content) {
+		return A2(
+			$Orasund$elm_layout$Layout$el,
+			attrs,
+			$elm$html$Html$text(content));
+	});
+var $author$project$Game$Level0$toHtml = function (args) {
+	return _Utils_ap(
+		_List_fromArray(
+			[
+				$author$project$View$Level$base($author$project$Game$Blue),
+				A2(
+				$Orasund$elm_layout$Layout$text,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+						A2($elm$html$Html$Attributes$style, 'top', '100px'),
+						A2($elm$html$Html$Attributes$style, 'width', '400px'),
+						A2($elm$html$Html$Attributes$style, 'justify-content', 'center'),
+						A2($elm$html$Html$Attributes$style, 'color', 'var(--primary-color)'),
+						$elm$html$Html$Attributes$class('font-size-title'),
+						A2($elm$html$Html$Attributes$style, 'font-weight', 'bold')
+					]),
+				'Lasche'),
+				A2(
+				$Orasund$elm_layout$Layout$text,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+						A2($elm$html$Html$Attributes$style, 'top', '240px'),
+						A2($elm$html$Html$Attributes$style, 'width', '400px'),
+						A2($elm$html$Html$Attributes$style, 'justify-content', 'center'),
+						A2($elm$html$Html$Attributes$style, 'color', 'var(--primary-color)'),
+						$elm$html$Html$Attributes$class('font-size-big'),
+						A2($elm$html$Html$Attributes$style, 'font-weight', 'thin')
+					]),
+				'by'),
+				A2(
+				$Orasund$elm_layout$Layout$text,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+						A2($elm$html$Html$Attributes$style, 'top', '275px'),
+						A2($elm$html$Html$Attributes$style, 'width', '400px'),
+						A2($elm$html$Html$Attributes$style, 'justify-content', 'center'),
+						A2($elm$html$Html$Attributes$style, 'color', 'var(--primary-color)'),
+						$elm$html$Html$Attributes$class('font-size-big')
+					]),
+				'Lucas Payr')
+			]),
+		_Utils_ap(
+			$author$project$View$Level$downwardsBigButton(
+				{
+					color: $author$project$Game$Yellow,
+					onPress: $elm$core$Maybe$Just(
+						args.onPress(
+							_List_fromArray(
+								[0]))),
+					pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, $author$project$Config$screenMinHeight - 200)
+				}),
+			_List_fromArray(
+				[
+					A2(
+					$author$project$View$Level$area,
+					{
+						center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, $author$project$Config$screenMinHeight - 200),
+						transition: A2($elm$core$Set$member, 0, args.transitioningArea),
+						visible: !A2($elm$core$Set$member, 0, args.areas)
+					},
+					_List_fromArray(
+						[
+							$author$project$View$Level$base($author$project$Game$Blue)
+						]))
+				])));
+};
+var $author$project$Game$Level0$def = {
+	init: $elm$core$Set$fromList(
+		_List_fromArray(
+			[0])),
+	toHtml: $author$project$Game$Level0$toHtml
+};
+var $author$project$Game$Level1$firstArea = function (bool) {
+	return A2(
+		$Orasund$elm_layout$Layout$el,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'height', '350px'),
+				A2($elm$html$Html$Attributes$style, 'width', '400px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'background-color',
+				$author$project$View$color(bool))
+			]),
+		$Orasund$elm_layout$Layout$none);
+};
+var $author$project$Game$Level1$firstButton = function (bool) {
+	return A2(
+		$author$project$View$Level$button,
+		bool,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'width', '200px'),
+				A2($elm$html$Html$Attributes$style, 'top', '425px'),
+				A2($elm$html$Html$Attributes$style, 'left', '100px'),
+				$elm$html$Html$Attributes$class('font-size-big')
+			]));
+};
 var $author$project$Game$Level1$path = function (bool) {
 	return A2(
 		$Orasund$elm_layout$Layout$el,
@@ -5617,7 +5798,6 @@ var $author$project$Game$Level1$path = function (bool) {
 			]),
 		$Orasund$elm_layout$Layout$none);
 };
-var $author$project$Config$screenMinWidth = 400;
 var $author$project$Game$Level1$secondArea = function (bool) {
 	return A2(
 		$Orasund$elm_layout$Layout$el,
@@ -5705,29 +5885,6 @@ var $author$project$Game$Level1$def = {
 			[0, 1])),
 	toHtml: $author$project$Game$Level1$toHtml
 };
-var $author$project$View$Level$circle = F2(
-	function (bool, attrs) {
-		return A2(
-			$Orasund$elm_layout$Layout$el,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						A2($elm$html$Html$Attributes$style, 'aspect-ratio', '1'),
-						A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-						A2($elm$html$Html$Attributes$style, 'border-radius', '100%'),
-						$elm$html$Html$Attributes$class('font-size-big'),
-						A2(
-						$elm$html$Html$Attributes$style,
-						'background-color',
-						$author$project$View$color(bool)),
-						A2(
-						$elm$html$Html$Attributes$style,
-						'color',
-						$author$project$View$negColor(bool))
-					]),
-				attrs),
-			$Orasund$elm_layout$Layout$none);
-	});
 var $author$project$View$Level$downwardsButton = function (args) {
 	var _v0 = args.pos;
 	var x = _v0.a;
@@ -5777,21 +5934,12 @@ var $author$project$View$Level$downwardsButton = function (args) {
 						]),
 					msg);
 			} else {
-				return A2(
-					$author$project$View$Level$circle,
-					args.color,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'width', '100px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'top',
-							$elm$core$String$fromInt(y - 50) + 'px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'left',
-							$elm$core$String$fromInt(x - 50) + 'px')
-						]));
+				return $author$project$View$Level$circle(
+					{
+						color: args.color,
+						pos: _Utils_Tuple2(x, y),
+						radius: 50
+					});
 			}
 		}()
 		]);
@@ -5878,30 +6026,24 @@ var $author$project$View$Level$downwardsHugeButton = function (args) {
 							$elm$html$Html$Attributes$style,
 							'left',
 							$elm$core$String$fromInt(x - 200) + 'px'),
-							$elm$html$Html$Attributes$class('font-size-big')
+							$elm$html$Html$Attributes$class('font-size-title')
 						]),
 					msg);
 			} else {
-				return A2(
-					$author$project$View$Level$circle,
-					args.color,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'width', '400px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'top',
-							$elm$core$String$fromInt(y - 200) + 'px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'left',
-							$elm$core$String$fromInt(x - 200) + 'px')
-						]));
+				return $author$project$View$Level$circle(
+					{
+						color: args.color,
+						pos: _Utils_Tuple2(x, y),
+						radius: 200
+					});
 			}
 		}()
 		]);
 };
-var $author$project$Game$Level3$reset = function (onPress) {
+var $author$project$View$Level$reset = function (args) {
+	var _v0 = args.pos;
+	var x = _v0.a;
+	var y = _v0.b;
 	return A2(
 		$Orasund$elm_layout$Layout$textButton,
 		_List_fromArray(
@@ -5916,15 +6058,15 @@ var $author$project$Game$Level3$reset = function (onPress) {
 				A2(
 				$elm$html$Html$Attributes$style,
 				'top',
-				$elm$core$String$fromInt((($author$project$Config$screenMinHeight / 2) | 0) - 150) + 'px'),
+				$elm$core$String$fromInt(y - 50) + 'px'),
 				A2(
 				$elm$html$Html$Attributes$style,
 				'left',
-				$elm$core$String$fromInt((($author$project$Config$screenMinWidth / 2) | 0) - 50) + 'px')
+				$elm$core$String$fromInt(x - 50) + 'px')
 			]),
 		{
 			label: 'Reset',
-			onPress: $elm$core$Maybe$Just(onPress)
+			onPress: $elm$core$Maybe$Just(args.onPress)
 		});
 };
 var $author$project$View$Level$square = function (args) {
@@ -6008,21 +6150,12 @@ var $author$project$View$Level$upwardsButton = function (args) {
 						]),
 					msg);
 			} else {
-				return A2(
-					$author$project$View$Level$circle,
-					args.color,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'width', '100px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'top',
-							$elm$core$String$fromInt(y - 50) + 'px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'left',
-							$elm$core$String$fromInt(x - 50) + 'px')
-						]));
+				return $author$project$View$Level$circle(
+					{
+						color: args.color,
+						pos: _Utils_Tuple2(x, y),
+						radius: 50
+					});
 			}
 		}()
 		]);
@@ -6064,7 +6197,7 @@ var $author$project$View$Level$upwardsHalfCircle = function (args) {
 			]),
 		$Orasund$elm_layout$Layout$none);
 };
-var $author$project$Game$Level3$toHtml = function (args) {
+var $author$project$Game$Level2$toHtml = function (args) {
 	return _Utils_ap(
 		_List_fromArray(
 			[
@@ -6127,7 +6260,11 @@ var $author$project$Game$Level3$toHtml = function (args) {
 									pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, ($author$project$Config$screenMinHeight / 2) | 0),
 									radius: ($author$project$Config$screenMinWidth / 2) | 0
 								}),
-								$author$project$Game$Level3$reset(args.reset)
+								$author$project$View$Level$reset(
+								{
+									onPress: args.reset,
+									pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) - 100)
+								})
 							]))
 					]),
 				_Utils_ap(
@@ -6188,11 +6325,11 @@ var $author$project$Game$Level3$toHtml = function (args) {
 								]))
 						])))));
 };
-var $author$project$Game$Level3$def = {
+var $author$project$Game$Level2$def = {
 	init: $elm$core$Set$fromList(
 		_List_fromArray(
 			[0, 2, 4])),
-	toHtml: $author$project$Game$Level3$toHtml
+	toHtml: $author$project$Game$Level2$toHtml
 };
 var $author$project$View$Level$bottomHalf = function (color) {
 	return A2(
@@ -6231,75 +6368,7 @@ var $elm$core$List$append = F2(
 var $elm$core$List$concat = function (lists) {
 	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
 };
-var $author$project$View$Level$downwardsBigButton = function (args) {
-	var _v0 = args.pos;
-	var x = _v0.a;
-	var y = _v0.b;
-	return _List_fromArray(
-		[
-			A2(
-			$Orasund$elm_layout$Layout$el,
-			_List_fromArray(
-				[
-					A2($elm$html$Html$Attributes$style, 'width', '100px'),
-					A2($elm$html$Html$Attributes$style, 'height', '200px'),
-					A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-					A2(
-					$elm$html$Html$Attributes$style,
-					'top',
-					$elm$core$String$fromInt(y) + 'px'),
-					A2(
-					$elm$html$Html$Attributes$style,
-					'left',
-					$elm$core$String$fromInt(x - 50) + 'px'),
-					A2(
-					$elm$html$Html$Attributes$style,
-					'background-color',
-					$author$project$View$color(args.color))
-				]),
-			$Orasund$elm_layout$Layout$none),
-			function () {
-			var _v1 = args.onPress;
-			if (_v1.$ === 'Just') {
-				var msg = _v1.a;
-				return A3(
-					$author$project$View$Level$button,
-					args.color,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'width', '200px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'top',
-							$elm$core$String$fromInt(y - 100) + 'px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'left',
-							$elm$core$String$fromInt(x - 100) + 'px'),
-							$elm$html$Html$Attributes$class('font-size-big')
-						]),
-					msg);
-			} else {
-				return A2(
-					$author$project$View$Level$circle,
-					args.color,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'width', '200px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'top',
-							$elm$core$String$fromInt(y - 100) + 'px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'left',
-							$elm$core$String$fromInt(x - 100) + 'px')
-						]));
-			}
-		}()
-		]);
-};
-var $author$project$Game$Level4$leftSquare = function (color) {
+var $author$project$Game$Level3$leftSquare = function (color) {
 	return A2(
 		$Orasund$elm_layout$Layout$el,
 		_List_fromArray(
@@ -6322,33 +6391,7 @@ var $author$project$Game$Level4$leftSquare = function (color) {
 			]),
 		$Orasund$elm_layout$Layout$none);
 };
-var $author$project$Game$Level4$reset = function (onPress) {
-	return A2(
-		$Orasund$elm_layout$Layout$textButton,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'background-color', 'var(--trinary-color)'),
-				A2($elm$html$Html$Attributes$style, 'aspect-ratio', '1'),
-				A2($elm$html$Html$Attributes$style, 'color', 'white'),
-				A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
-				A2($elm$html$Html$Attributes$style, 'width', '100px'),
-				A2($elm$html$Html$Attributes$style, 'border-radius', '100%'),
-				A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
-				A2(
-				$elm$html$Html$Attributes$style,
-				'top',
-				$elm$core$String$fromInt((($author$project$Config$screenMinHeight / 2) | 0) - 250) + 'px'),
-				A2(
-				$elm$html$Html$Attributes$style,
-				'left',
-				$elm$core$String$fromInt((($author$project$Config$screenMinWidth / 2) | 0) - 50) + 'px')
-			]),
-		{
-			label: 'Reset',
-			onPress: $elm$core$Maybe$Just(onPress)
-		});
-};
-var $author$project$Game$Level4$rightSquare = function (color) {
+var $author$project$Game$Level3$rightSquare = function (color) {
 	return A2(
 		$Orasund$elm_layout$Layout$el,
 		_List_fromArray(
@@ -6371,7 +6414,7 @@ var $author$project$Game$Level4$rightSquare = function (color) {
 			]),
 		$Orasund$elm_layout$Layout$none);
 };
-var $author$project$Game$Level4$topSquare = function (color) {
+var $author$project$Game$Level3$topSquare = function (color) {
 	return A2(
 		$Orasund$elm_layout$Layout$el,
 		_List_fromArray(
@@ -6440,31 +6483,22 @@ var $author$project$View$Level$upwardsBigButton = function (args) {
 						]),
 					msg);
 			} else {
-				return A2(
-					$author$project$View$Level$circle,
-					args.color,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'width', '200px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'top',
-							$elm$core$String$fromInt(y - 100) + 'px'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'left',
-							$elm$core$String$fromInt(x - 100) + 'px')
-						]));
+				return $author$project$View$Level$circle(
+					{
+						color: args.color,
+						pos: _Utils_Tuple2(x, y),
+						radius: 100
+					});
 			}
 		}()
 		]);
 };
-var $author$project$Game$Level4$toHtml = function (args) {
+var $author$project$Game$Level3$toHtml = function (args) {
 	return _Utils_ap(
 		_List_fromArray(
 			[
 				$author$project$View$Level$base($author$project$Game$Blue),
-				$author$project$Game$Level4$topSquare($author$project$Game$Yellow),
+				$author$project$Game$Level3$topSquare($author$project$Game$Yellow),
 				$author$project$View$Level$bottomHalf($author$project$Game$Yellow)
 			]),
 		_Utils_ap(
@@ -6508,7 +6542,7 @@ var $author$project$Game$Level4$toHtml = function (args) {
 							},
 							_List_fromArray(
 								[
-									$author$project$Game$Level4$leftSquare($author$project$Game$Blue)
+									$author$project$Game$Level3$leftSquare($author$project$Game$Blue)
 								])),
 							A2(
 							$author$project$View$Level$area,
@@ -6519,9 +6553,13 @@ var $author$project$Game$Level4$toHtml = function (args) {
 							},
 							_List_fromArray(
 								[
-									$author$project$Game$Level4$rightSquare($author$project$Game$Blue)
+									$author$project$Game$Level3$rightSquare($author$project$Game$Blue)
 								])),
-							$author$project$Game$Level4$reset(args.reset),
+							$author$project$View$Level$reset(
+							{
+								onPress: args.reset,
+								pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) - 200)
+							}),
 							A2(
 							$author$project$View$Level$area,
 							{
@@ -6561,20 +6599,186 @@ var $author$project$Game$Level4$toHtml = function (args) {
 								]))
 						])))));
 };
-var $author$project$Game$Level4$def = {
+var $author$project$Game$Level3$def = {
 	init: $elm$core$Set$fromList(
 		_List_fromArray(
 			[0, 3, 4])),
+	toHtml: $author$project$Game$Level3$toHtml
+};
+var $author$project$View$Level$topHalf = function (color) {
+	return A2(
+		$Orasund$elm_layout$Layout$el,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$Attributes$style,
+				'width',
+				$elm$core$String$fromInt($author$project$Config$screenMinWidth) + 'px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'height',
+				$elm$core$String$fromInt(($author$project$Config$screenMinHeight / 2) | 0) + 'px'),
+				A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+				A2($elm$html$Html$Attributes$style, 'top', '0'),
+				A2($elm$html$Html$Attributes$style, 'left', '0'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'background-color',
+				$author$project$View$color(color))
+			]),
+		$Orasund$elm_layout$Layout$none);
+};
+var $author$project$Game$Level4$topSquare = function (color) {
+	return A2(
+		$Orasund$elm_layout$Layout$el,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$Attributes$style,
+				'width',
+				$elm$core$String$fromInt($author$project$Config$screenMinWidth) + 'px'),
+				A2($elm$html$Html$Attributes$style, 'height', '150px'),
+				A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+				A2($elm$html$Html$Attributes$style, 'left', '0px'),
+				A2($elm$html$Html$Attributes$style, 'top', '0px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'background-color',
+				$author$project$View$color(color))
+			]),
+		$Orasund$elm_layout$Layout$none);
+};
+var $author$project$Game$Level4$toHtml = function (args) {
+	return _Utils_ap(
+		_List_fromArray(
+			[
+				$author$project$View$Level$base($author$project$Game$Yellow),
+				$author$project$View$Level$bottomHalf($author$project$Game$Blue),
+				$author$project$View$Level$circle(
+				{
+					color: $author$project$Game$Blue,
+					pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) - 200),
+					radius: 200
+				}),
+				$author$project$Game$Level4$topSquare($author$project$Game$Blue)
+			]),
+		_Utils_ap(
+			$author$project$View$Level$downwardsBigButton(
+				{
+					color: $author$project$Game$Yellow,
+					onPress: $elm$core$Maybe$Nothing,
+					pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) - 200)
+				}),
+			_Utils_ap(
+				$author$project$View$Level$upwardsBigButton(
+					{
+						color: $author$project$Game$Blue,
+						onPress: $elm$core$Maybe$Nothing,
+						pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200)
+					}),
+				_Utils_ap(
+					$author$project$View$Level$upwardsButton(
+						{
+							color: $author$project$Game$Blue,
+							onPress: $elm$core$Maybe$Just(
+								args.onPress(
+									_List_fromArray(
+										[0]))),
+							pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) - 200)
+						}),
+					_Utils_ap(
+						$author$project$View$Level$upwardsBigButton(
+							{
+								color: $author$project$Game$Yellow,
+								onPress: $elm$core$Maybe$Just(
+									args.onPress(
+										A2($elm$core$Set$member, 0, args.areas) ? _List_fromArray(
+											[0, 1, 2]) : _List_fromArray(
+											[1]))),
+								pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200)
+							}),
+						_List_fromArray(
+							[
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) - 200),
+									transition: A2($elm$core$Set$member, 0, args.transitioningArea),
+									visible: A2($elm$core$Set$member, 0, args.areas) || (!A2($elm$core$Set$member, 2, args.areas))
+								},
+								_List_fromArray(
+									[
+										$author$project$View$Level$topHalf($author$project$Game$Yellow)
+									])),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200),
+									transition: A2($elm$core$Set$member, 1, args.transitioningArea),
+									visible: !A2($elm$core$Set$member, 1, args.areas)
+								},
+								$elm$core$List$concat(
+									_List_fromArray(
+										[
+											$author$project$View$Level$downwardsBigButton(
+											{
+												color: $author$project$Game$Blue,
+												onPress: $elm$core$Maybe$Nothing,
+												pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) - 200)
+											}),
+											$author$project$View$Level$upwardsBigButton(
+											{
+												color: $author$project$Game$Blue,
+												onPress: $elm$core$Maybe$Nothing,
+												pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200)
+											})
+										]))),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200),
+									transition: A2($elm$core$Set$member, 2, args.transitioningArea),
+									visible: !A2($elm$core$Set$member, 2, args.areas)
+								},
+								_List_fromArray(
+									[
+										$author$project$View$Level$topHalf($author$project$Game$Blue)
+									])),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200),
+									transition: A2($elm$core$Set$member, 1, args.transitioningArea),
+									visible: A2($elm$core$Set$member, 2, args.areas) && (!A2($elm$core$Set$member, 1, args.areas))
+								},
+								_List_fromArray(
+									[
+										$author$project$View$Level$reset(
+										{
+											onPress: args.reset,
+											pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, (($author$project$Config$screenMinHeight / 2) | 0) + 200)
+										})
+									]))
+							]))))));
+};
+var $author$project$Game$Level4$def = {
+	init: $elm$core$Set$fromList(
+		_List_fromArray(
+			[1, 2])),
 	toHtml: $author$project$Game$Level4$toHtml
 };
 var $author$project$Level$fromInt = function (_int) {
 	switch (_int) {
 		case 1:
-			return $elm$core$Maybe$Just($author$project$Game$Level1$def);
+			return $elm$core$Maybe$Just($author$project$Game$Level0$def);
 		case 2:
-			return $elm$core$Maybe$Just($author$project$Game$Level4$def);
+			return $elm$core$Maybe$Just($author$project$Game$Level1$def);
 		case 3:
+			return $elm$core$Maybe$Just($author$project$Game$Level2$def);
+		case 4:
 			return $elm$core$Maybe$Just($author$project$Game$Level3$def);
+		case 5:
+			return $elm$core$Maybe$Just($author$project$Game$Level4$def);
 		default:
 			return $elm$core$Maybe$Nothing;
 	}
@@ -6653,17 +6857,20 @@ var $author$project$Main$newGame = function (model) {
 					$author$project$Level$toGame(1))
 			}));
 };
+var $author$project$Main$playSound = _Platform_outgoingPort('playSound', $elm$json$Json$Encode$string);
 var $author$project$Main$resetLevel = function (model) {
-	return _Utils_update(
-		model,
-		{
-			game: A2(
-				$elm$core$Maybe$withDefault,
-				$author$project$Game$empty,
-				$author$project$Level$toGame(model.game.level)),
-			overlay: $elm$core$Maybe$Just($author$project$Overlay$LevelCleared),
-			transitioningArea: $elm$core$Set$empty
-		});
+	return _Utils_Tuple2(
+		_Utils_update(
+			model,
+			{
+				game: A2(
+					$elm$core$Maybe$withDefault,
+					$author$project$Game$empty,
+					$author$project$Level$toGame(model.game.level)),
+				overlay: $elm$core$Maybe$Just($author$project$Overlay$LevelCleared),
+				transitioningArea: $elm$core$Set$empty
+			}),
+		$author$project$Main$playSound('buttonPress'));
 };
 var $author$project$Main$ClearedLevel = {$: 'ClearedLevel'};
 var $author$project$Main$EndTransition = {$: 'EndTransition'};
@@ -7069,18 +7276,23 @@ var $author$project$Main$setState = F2(
 		return _Utils_Tuple2(
 			_Utils_update(
 				model,
-				{game: game}),
-			$author$project$Game$isCleared(game) ? A2(
-				$elm$core$Task$perform,
-				function (_v0) {
-					return $author$project$Main$ClearedLevel;
-				},
-				$elm$core$Process$sleep(4000)) : A2(
-				$elm$core$Task$perform,
-				function (_v1) {
-					return $author$project$Main$EndTransition;
-				},
-				$elm$core$Process$sleep(3000)));
+				{game: game, overlay: $elm$core$Maybe$Nothing}),
+			$elm$core$Platform$Cmd$batch(
+				_List_fromArray(
+					[
+						$author$project$Game$isCleared(game) ? A2(
+						$elm$core$Task$perform,
+						function (_v0) {
+							return $author$project$Main$ClearedLevel;
+						},
+						$elm$core$Process$sleep(4000)) : A2(
+						$elm$core$Task$perform,
+						function (_v1) {
+							return $author$project$Main$EndTransition;
+						},
+						$elm$core$Process$sleep(3000)),
+						$author$project$Main$playSound('buttonPress')
+					])));
 	});
 var $author$project$Main$SetState = function (a) {
 	return {$: 'SetState', a: a};
@@ -7130,8 +7342,7 @@ var $author$project$Main$update = F2(
 				return withNoCmd(
 					$author$project$Main$levelCleared(model));
 			default:
-				return withNoCmd(
-					$author$project$Main$resetLevel(model));
+				return $author$project$Main$resetLevel(model);
 		}
 	});
 var $author$project$Main$ResetLevel = {$: 'ResetLevel'};
@@ -7165,19 +7376,12 @@ var $Orasund$elm_layout$Layout$column = function (attrs) {
 				]),
 			attrs));
 };
-var $Orasund$elm_layout$Layout$text = F2(
-	function (attrs, content) {
-		return A2(
-			$Orasund$elm_layout$Layout$el,
-			attrs,
-			$elm$html$Html$text(content));
-	});
 var $author$project$View$Overlay$gameEnd = A2(
 	$author$project$View$Overlay$asFullScreenOverlay,
 	_Utils_ap(
 		_List_fromArray(
 			[
-				A2($elm$html$Html$Attributes$style, 'background-color', 'var(--trinary-color)'),
+				A2($elm$html$Html$Attributes$style, 'background-color', 'var(--primary-color)'),
 				A2($elm$html$Html$Attributes$style, 'color', 'white')
 			]),
 		$Orasund$elm_layout$Layout$centered),
@@ -7195,8 +7399,7 @@ var $author$project$View$Overlay$gameEnd = A2(
 					[
 						$elm$html$Html$Attributes$class('font-size-big')
 					]),
-				'Thanks for playing!'),
-				A2($Orasund$elm_layout$Layout$text, _List_Nil, 'created by Lucas Payr')
+				'Thanks for playing!')
 			])));
 var $elm$core$List$singleton = function (value) {
 	return _List_fromArray(

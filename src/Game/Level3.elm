@@ -6,12 +6,13 @@ import Html exposing (Html)
 import Html.Attributes
 import Layout
 import Set
+import View
 import View.Level
 
 
 def : LevelDef msg
 def =
-    { init = Set.fromList [ 0, 2, 4 ]
+    { init = [ 0, 3, 4 ] |> Set.fromList
     , toHtml = toHtml
     }
 
@@ -19,113 +20,110 @@ def =
 toHtml : Args msg -> List (Html msg)
 toHtml args =
     [ View.Level.base Blue
-    , View.Level.upwardsHalfCircle
-        { color = Yellow
-        , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
-        , radius = Config.screenMinWidth // 2
-        }
-    , View.Level.square
-        { color = Yellow
-        , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight - 50 )
-        , size = 200
-        }
+    , topSquare Yellow
+    , View.Level.bottomHalf Yellow
     ]
-        ++ View.Level.downwardsButton
+        ++ View.Level.upwardsBigButton
             { color = Blue
-            , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 - 100 )
+            , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 200 )
             , onPress =
-                (if Set.member 2 args.areas then
-                    [ 1 ]
+                if Set.member 3 args.areas && Set.member 4 args.areas then
+                    args.onPress [ 2, 1 ] |> Just
 
-                 else
-                    [ 1, 2, 3 ]
-                )
-                    |> args.onPress
-                    |> Just
+                else
+                    Nothing
             }
-        ++ [ [ View.Level.upwardsHalfCircle
-                { color = Yellow
-                , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
-                , radius = Config.screenMinWidth // 2
-                }
-             ]
-                |> View.Level.area
-                    { transition = Set.member 1 args.transitioningArea
-                    , visible = Set.member 1 args.areas
-                    , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 - 100 )
-                    }
-           , [ View.Level.upwardsHalfCircle
-                { color = Blue
-                , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
-                , radius = Config.screenMinWidth // 2
-                }
-             , reset args.reset
-             ]
-                |> View.Level.area
-                    { transition = Set.member 2 args.transitioningArea
-                    , visible = Set.member 0 args.areas |> not
-                    , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 100 )
-                    }
-           ]
-        ++ View.Level.upwardsButton
+        ++ View.Level.downwardsButton
             { color = Yellow
-            , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 100 )
-            , onPress =
-                (if Set.member 1 args.areas |> not then
-                    [ 2 ]
-
-                 else
-                    [ 0, 2, 1 ]
-                )
-                    |> args.onPress
-                    |> Just
+            , pos = ( 75, Config.screenMinHeight // 2 - 100 )
+            , onPress = args.onPress [ 3 ] |> Just
             }
-        ++ [ [ View.Level.downwardsHalfCircle
-                { color = Blue
-                , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
-                , radius = Config.screenMinWidth // 2
-                }
-             ]
-                |> View.Level.area
-                    { transition = Set.member 2 args.transitioningArea
-                    , visible = Set.member 2 args.areas |> not
-                    , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 100 )
-                    }
-           , View.Level.downwardsHugeButton
-                { color = Yellow
-                , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
-                , onPress =
-                    [ 0, 1, 2, 3, 4 ]
-                        |> args.onPress
-                        |> Just
-                }
+        ++ View.Level.downwardsButton
+            { color = Yellow
+            , pos = ( Config.screenMinWidth - 75, Config.screenMinHeight // 2 - 100 )
+            , onPress = args.onPress [ 4 ] |> Just
+            }
+        ++ [ [ leftSquare Blue ]
                 |> View.Level.area
                     { transition = Set.member 3 args.transitioningArea
-                    , visible = Set.member 3 args.areas
-                    , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 - 100 )
+                    , center = ( 75, Config.screenMinHeight // 2 - 100 )
+                    , visible = Set.member 3 args.areas |> not
+                    }
+           , [ rightSquare Blue ]
+                |> View.Level.area
+                    { transition = Set.member 4 args.transitioningArea
+                    , center = ( Config.screenMinWidth - 75, Config.screenMinHeight // 2 - 100 )
+                    , visible = Set.member 4 args.areas |> not
+                    }
+           , View.Level.reset
+                { onPress = args.reset
+                , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 - 200 )
+                }
+           , [ View.Level.downwardsBigButton
+                { color = Yellow
+                , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 - 200 )
+                , onPress = Nothing
+                }
+             , View.Level.upwardsBigButton
+                { color = Yellow
+                , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 200 )
+                , onPress =
+                    if (Set.member 3 args.areas |> not) && (Set.member 4 args.areas |> not) then
+                        [ 0, 1, 2 ] |> args.onPress |> Just
+
+                    else
+                        Nothing
+                }
+             ]
+                |> List.concat
+                |> View.Level.area
+                    { transition = Set.member 2 args.transitioningArea
+                    , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 200 )
+                    , visible = Set.member 2 args.areas || (Set.member 0 args.areas |> not)
                     }
            , [ View.Level.base Blue ]
                 |> View.Level.area
-                    { transition = Set.member 4 args.transitioningArea
-                    , visible = Set.member 4 args.areas |> not
-                    , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 )
+                    { transition = Set.member 0 args.transitioningArea
+                    , center = ( Config.screenMinWidth // 2, Config.screenMinHeight // 2 + 200 )
+                    , visible = Set.member 0 args.areas |> not
                     }
            ]
 
 
-reset : msg -> Html msg
-reset onPress =
-    Layout.textButton
-        [ Html.Attributes.style "background-color" "var(--trinary-color)"
-        , Html.Attributes.style "aspect-ratio" "1"
-        , Html.Attributes.style "color" "white"
-        , Html.Attributes.style "font-weight" "bold"
-        , Html.Attributes.style "width" "100px"
-        , Html.Attributes.style "border-radius" "100%"
+rightSquare : Color -> Html msg
+rightSquare color =
+    Layout.el
+        [ Html.Attributes.style "width" (String.fromInt (Config.screenMinWidth // 2) ++ "px")
+        , Html.Attributes.style "height" (String.fromInt (Config.screenMinHeight - 150) ++ "px")
         , Html.Attributes.style "position" "absolute"
-        , Html.Attributes.style "top" (String.fromInt (Config.screenMinHeight // 2 - 150) ++ "px")
-        , Html.Attributes.style "left" (String.fromInt (Config.screenMinWidth // 2 - 50) ++ "px")
+        , Html.Attributes.style "left" "200px"
+        , Html.Attributes.style "top" "150px"
+        , Html.Attributes.style "background-color" (View.color color)
         ]
-        { label = "Reset"
-        , onPress = onPress |> Just
-        }
+        Layout.none
+
+
+leftSquare : Color -> Html msg
+leftSquare color =
+    Layout.el
+        [ Html.Attributes.style "width" (String.fromInt (Config.screenMinWidth // 2) ++ "px")
+        , Html.Attributes.style "height" (String.fromInt (Config.screenMinHeight - 150) ++ "px")
+        , Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "left" "0px"
+        , Html.Attributes.style "top" "150px"
+        , Html.Attributes.style "background-color" (View.color color)
+        ]
+        Layout.none
+
+
+topSquare : Color -> Html msg
+topSquare color =
+    Layout.el
+        [ Html.Attributes.style "width" (String.fromInt Config.screenMinWidth ++ "px")
+        , Html.Attributes.style "height" "150px"
+        , Html.Attributes.style "position" "absolute"
+        , Html.Attributes.style "left" "0px"
+        , Html.Attributes.style "top" "0px"
+        , Html.Attributes.style "background-color" (View.color color)
+        ]
+        Layout.none

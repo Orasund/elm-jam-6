@@ -1,4 +1,4 @@
-module Main exposing (..)
+port module Main exposing (..)
 
 import Browser
 import Config
@@ -13,6 +13,9 @@ import Set exposing (Set)
 import Task
 import View
 import View.Overlay
+
+
+port playSound : String -> Cmd msg
 
 
 type alias Model =
@@ -102,14 +105,18 @@ setState list model =
     in
     ( { model
         | game = game
+        , overlay = Nothing
       }
-    , if Game.isCleared game then
-        Process.sleep 4000
-            |> Task.perform (\() -> ClearedLevel)
+    , [ if Game.isCleared game then
+            Process.sleep 4000
+                |> Task.perform (\() -> ClearedLevel)
 
-      else
-        Process.sleep 3000
-            |> Task.perform (\() -> EndTransition)
+        else
+            Process.sleep 3000
+                |> Task.perform (\() -> EndTransition)
+      , playSound "buttonPress"
+      ]
+        |> Cmd.batch
     )
 
 
@@ -124,13 +131,15 @@ levelCleared model =
     }
 
 
-resetLevel : Model -> Model
+resetLevel : Model -> ( Model, Cmd Msg )
 resetLevel model =
-    { model
+    ( { model
         | game = Level.toGame model.game.level |> Maybe.withDefault Game.empty
         , transitioningArea = Set.empty
         , overlay = Just LevelCleared
-    }
+      }
+    , playSound "buttonPress"
+    )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -162,7 +171,7 @@ update msg model =
             model |> levelCleared |> withNoCmd
 
         ResetLevel ->
-            model |> resetLevel |> withNoCmd
+            model |> resetLevel
 
 
 viewOverlay : Model -> Overlay -> Html Msg

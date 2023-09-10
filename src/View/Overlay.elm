@@ -31,14 +31,13 @@ gameMenu args =
 gameEnd : Html msg
 gameEnd =
     [ "Thanks for playing!" |> Layout.text [ Html.Attributes.class "font-size-big" ]
-    , "created by Lucas Payr" |> Layout.text []
     ]
         |> Layout.column
             (Html.Attributes.style "gap" "var(--big-space)"
                 :: Layout.centered
             )
         |> asFullScreenOverlay
-            ([ Html.Attributes.style "background-color" "var(--trinary-color)"
+            ([ Html.Attributes.style "background-color" "var(--primary-color)"
              , Html.Attributes.style "color" "white"
              ]
                 ++ Layout.centered
