@@ -6091,20 +6091,20 @@ var $author$project$View$Level$square = function (args) {
 				A2(
 				$elm$html$Html$Attributes$style,
 				'width',
-				$elm$core$String$fromInt(args.size) + 'px'),
+				$elm$core$String$fromInt(args.width) + 'px'),
 				A2(
 				$elm$html$Html$Attributes$style,
 				'height',
-				$elm$core$String$fromInt(args.size) + 'px'),
+				$elm$core$String$fromInt(args.height) + 'px'),
 				A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
 				A2(
 				$elm$html$Html$Attributes$style,
 				'left',
-				$elm$core$String$fromInt(x - ((args.size / 2) | 0)) + 'px'),
+				$elm$core$String$fromInt(x - ((args.width / 2) | 0)) + 'px'),
 				A2(
 				$elm$html$Html$Attributes$style,
 				'top',
-				$elm$core$String$fromInt(y - ((args.size / 2) | 0)) + 'px'),
+				$elm$core$String$fromInt(y - ((args.height / 2) | 0)) + 'px'),
 				A2(
 				$elm$html$Html$Attributes$style,
 				'background-color',
@@ -6222,8 +6222,9 @@ var $author$project$Game$Level2$toHtml = function (args) {
 				$author$project$View$Level$square(
 				{
 					color: $author$project$Game$Yellow,
+					height: 200,
 					pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 2) | 0, $author$project$Config$screenMinHeight - 50),
-					size: 200
+					width: 200
 				})
 			]),
 		_Utils_ap(
@@ -6778,6 +6779,326 @@ var $author$project$Game$Level4$def = {
 			[1, 2])),
 	toHtml: $author$project$Game$Level4$toHtml
 };
+var $author$project$View$Level$leftwardsButton = function (args) {
+	var _v0 = args.pos;
+	var x = _v0.a;
+	var y = _v0.b;
+	return _List_fromArray(
+		[
+			A2(
+			$Orasund$elm_layout$Layout$el,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'width', '100px'),
+					A2($elm$html$Html$Attributes$style, 'height', '50px'),
+					A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'top',
+					$elm$core$String$fromInt(y - 25) + 'px'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'left',
+					$elm$core$String$fromInt(x - 100) + 'px'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'background-color',
+					$author$project$View$color(args.color))
+				]),
+			$Orasund$elm_layout$Layout$none),
+			function () {
+			var _v1 = args.onPress;
+			if (_v1.$ === 'Just') {
+				var msg = _v1.a;
+				return A3(
+					$author$project$View$Level$button,
+					args.color,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'width', '100px'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'top',
+							$elm$core$String$fromInt(y - 50) + 'px'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'left',
+							$elm$core$String$fromInt(x - 50) + 'px'),
+							A2($elm$html$Html$Attributes$style, 'font-weight', 'bold')
+						]),
+					msg);
+			} else {
+				return $author$project$View$Level$circle(
+					{
+						color: args.color,
+						pos: _Utils_Tuple2(x, y),
+						radius: 50
+					});
+			}
+		}()
+		]);
+};
+var $author$project$View$Level$rightwardsButton = function (args) {
+	var _v0 = args.pos;
+	var x = _v0.a;
+	var y = _v0.b;
+	return _List_fromArray(
+		[
+			A2(
+			$Orasund$elm_layout$Layout$el,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'width', '100px'),
+					A2($elm$html$Html$Attributes$style, 'height', '50px'),
+					A2($elm$html$Html$Attributes$style, 'position', 'absolute'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'top',
+					$elm$core$String$fromInt(y - 25) + 'px'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'left',
+					$elm$core$String$fromInt(x) + 'px'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'background-color',
+					$author$project$View$color(args.color))
+				]),
+			$Orasund$elm_layout$Layout$none),
+			function () {
+			var _v1 = args.onPress;
+			if (_v1.$ === 'Just') {
+				var msg = _v1.a;
+				return A3(
+					$author$project$View$Level$button,
+					args.color,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'width', '100px'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'top',
+							$elm$core$String$fromInt(y - 50) + 'px'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'left',
+							$elm$core$String$fromInt(x - 50) + 'px'),
+							A2($elm$html$Html$Attributes$style, 'font-weight', 'bold')
+						]),
+					msg);
+			} else {
+				return $author$project$View$Level$circle(
+					{
+						color: args.color,
+						pos: _Utils_Tuple2(x, y),
+						radius: 50
+					});
+			}
+		}()
+		]);
+};
+var $author$project$Game$Level5$toHtml = function (args) {
+	return _Utils_ap(
+		_List_fromArray(
+			[
+				$author$project$View$Level$base($author$project$Game$Yellow),
+				$author$project$View$Level$square(
+				{
+					color: $author$project$Game$Blue,
+					height: ($author$project$Config$screenMinHeight / 2) | 0,
+					pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 4) | 0, ($author$project$Config$screenMinHeight / 4) | 0),
+					width: ($author$project$Config$screenMinWidth / 2) | 0
+				}),
+				$author$project$View$Level$square(
+				{
+					color: $author$project$Game$Blue,
+					height: ($author$project$Config$screenMinHeight / 2) | 0,
+					pos: _Utils_Tuple2((($author$project$Config$screenMinWidth * 3) / 4) | 0, (($author$project$Config$screenMinHeight * 3) / 4) | 0),
+					width: ($author$project$Config$screenMinWidth / 2) | 0
+				}),
+				$author$project$View$Level$circle(
+				{
+					color: $author$project$Game$Blue,
+					pos: _Utils_Tuple2($author$project$Config$screenMinWidth, 0),
+					radius: 200
+				}),
+				$author$project$View$Level$circle(
+				{
+					color: $author$project$Game$Blue,
+					pos: _Utils_Tuple2(0, $author$project$Config$screenMinHeight),
+					radius: 200
+				})
+			]),
+		_Utils_ap(
+			$author$project$View$Level$rightwardsButton(
+				{
+					color: $author$project$Game$Yellow,
+					onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
+						args.onPress(
+							_List_fromArray(
+								[1]))),
+					pos: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) - 100)
+				}),
+			_Utils_ap(
+				$author$project$View$Level$upwardsButton(
+					{
+						color: $author$project$Game$Blue,
+						onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
+							args.onPress(
+								_List_fromArray(
+									[0]))),
+						pos: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) + 100)
+					}),
+				_Utils_ap(
+					$author$project$View$Level$downwardsButton(
+						{
+							color: $author$project$Game$Blue,
+							onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
+								args.onPress(
+									_List_fromArray(
+										[3]))),
+							pos: _Utils_Tuple2(300, (($author$project$Config$screenMinHeight / 2) | 0) - 100)
+						}),
+					_Utils_ap(
+						$author$project$View$Level$leftwardsButton(
+							{
+								color: $author$project$Game$Yellow,
+								onPress: (!$elm$core$Set$isEmpty(args.transitioningArea)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
+									args.onPress(
+										_List_fromArray(
+											[2]))),
+								pos: _Utils_Tuple2(300, (($author$project$Config$screenMinHeight / 2) | 0) + 100)
+							}),
+						_List_fromArray(
+							[
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) + 100),
+									transition: A2($elm$core$Set$member, 0, args.transitioningArea),
+									visible: A2($elm$core$Set$member, 0, args.areas)
+								},
+								$author$project$View$Level$upwardsButton(
+									{
+										color: $author$project$Game$Yellow,
+										onPress: $elm$core$Maybe$Nothing,
+										pos: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) + 100)
+									})),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) - 100),
+									transition: A2($elm$core$Set$member, 1, args.transitioningArea),
+									visible: !A2($elm$core$Set$member, 1, args.areas)
+								},
+								$author$project$View$Level$rightwardsButton(
+									{
+										color: $author$project$Game$Blue,
+										onPress: $elm$core$Maybe$Nothing,
+										pos: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) - 100)
+									})),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(300, (($author$project$Config$screenMinHeight / 2) | 0) + 100),
+									transition: A2($elm$core$Set$member, 2, args.transitioningArea),
+									visible: !A2($elm$core$Set$member, 2, args.areas)
+								},
+								$author$project$View$Level$leftwardsButton(
+									{
+										color: $author$project$Game$Blue,
+										onPress: $elm$core$Maybe$Nothing,
+										pos: _Utils_Tuple2(300, (($author$project$Config$screenMinHeight / 2) | 0) + 100)
+									})),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(300, (($author$project$Config$screenMinHeight / 2) | 0) - 100),
+									transition: A2($elm$core$Set$member, 3, args.transitioningArea),
+									visible: A2($elm$core$Set$member, 3, args.areas)
+								},
+								$author$project$View$Level$downwardsButton(
+									{
+										color: $author$project$Game$Yellow,
+										onPress: $elm$core$Maybe$Nothing,
+										pos: _Utils_Tuple2(300, (($author$project$Config$screenMinHeight / 2) | 0) - 100)
+									})),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) + 100),
+									transition: A2($elm$core$Set$member, 0, args.transitioningArea),
+									visible: A2($elm$core$Set$member, 0, args.areas)
+								},
+								_List_fromArray(
+									[
+										$author$project$View$Level$square(
+										{
+											color: $author$project$Game$Yellow,
+											height: ($author$project$Config$screenMinHeight / 2) | 0,
+											pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 4) | 0, ($author$project$Config$screenMinHeight / 4) | 0),
+											width: ($author$project$Config$screenMinWidth / 2) | 0
+										})
+									])),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) - 100),
+									transition: A2($elm$core$Set$member, 1, args.transitioningArea),
+									visible: !A2($elm$core$Set$member, 1, args.areas)
+								},
+								_List_fromArray(
+									[
+										$author$project$View$Level$square(
+										{
+											color: $author$project$Game$Blue,
+											height: ($author$project$Config$screenMinHeight / 2) | 0,
+											pos: _Utils_Tuple2((($author$project$Config$screenMinWidth * 3) / 4) | 0, ($author$project$Config$screenMinHeight / 4) | 0),
+											width: ($author$project$Config$screenMinWidth / 2) | 0
+										})
+									])),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(300, (($author$project$Config$screenMinHeight / 2) | 0) + 100),
+									transition: A2($elm$core$Set$member, 2, args.transitioningArea),
+									visible: !A2($elm$core$Set$member, 2, args.areas)
+								},
+								_List_fromArray(
+									[
+										$author$project$View$Level$square(
+										{
+											color: $author$project$Game$Blue,
+											height: ($author$project$Config$screenMinHeight / 2) | 0,
+											pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 4) | 0, (($author$project$Config$screenMinHeight * 3) / 4) | 0),
+											width: ($author$project$Config$screenMinWidth / 2) | 0
+										})
+									])),
+								A2(
+								$author$project$View$Level$area,
+								{
+									center: _Utils_Tuple2(300, (($author$project$Config$screenMinHeight / 2) | 0) - 100),
+									transition: A2($elm$core$Set$member, 3, args.transitioningArea),
+									visible: A2($elm$core$Set$member, 3, args.areas)
+								},
+								_List_fromArray(
+									[
+										$author$project$View$Level$square(
+										{
+											color: $author$project$Game$Yellow,
+											height: ($author$project$Config$screenMinHeight / 2) | 0,
+											pos: _Utils_Tuple2((($author$project$Config$screenMinWidth * 3) / 4) | 0, (($author$project$Config$screenMinHeight * 3) / 4) | 0),
+											width: ($author$project$Config$screenMinWidth / 2) | 0
+										})
+									]))
+							]))))));
+};
+var $author$project$Game$Level5$def = {
+	init: $elm$core$Set$fromList(
+		_List_fromArray(
+			[1, 2])),
+	toHtml: $author$project$Game$Level5$toHtml
+};
 var $author$project$Level$fromInt = function (_int) {
 	switch (_int) {
 		case 1:
@@ -6790,6 +7111,8 @@ var $author$project$Level$fromInt = function (_int) {
 			return $elm$core$Maybe$Just($author$project$Game$Level3$def);
 		case 5:
 			return $elm$core$Maybe$Just($author$project$Game$Level4$def);
+		case 6:
+			return $elm$core$Maybe$Just($author$project$Game$Level5$def);
 		default:
 			return $elm$core$Maybe$Nothing;
 	}

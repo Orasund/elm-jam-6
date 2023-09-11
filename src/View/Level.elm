@@ -123,18 +123,19 @@ downwardsHalfCircle args =
         Layout.none
 
 
-square : { color : Color, pos : ( Int, Int ), size : Int } -> Html msg
+square : { color : Color, pos : ( Int, Int ), width : Int
+    , height : Int } -> Html msg
 square args =
     let
         ( x, y ) =
             args.pos
     in
     Layout.el
-        [ Html.Attributes.style "width" (String.fromInt args.size ++ "px")
-        , Html.Attributes.style "height" (String.fromInt args.size ++ "px")
+        [ Html.Attributes.style "width" (String.fromInt args.width ++ "px")
+        , Html.Attributes.style "height" (String.fromInt args.height ++ "px")
         , Html.Attributes.style "position" "absolute"
-        , Html.Attributes.style "left" (String.fromInt (x - args.size // 2) ++ "px")
-        , Html.Attributes.style "top" (String.fromInt (y - args.size // 2) ++ "px")
+        , Html.Attributes.style "left" (String.fromInt (x - args.width // 2) ++ "px")
+        , Html.Attributes.style "top" (String.fromInt (y - args.height // 2) ++ "px")
         , Html.Attributes.style "background-color" (View.color args.color)
         ]
         Layout.none

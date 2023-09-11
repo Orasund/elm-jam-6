@@ -25,7 +25,8 @@ toHtml args =
     , View.Level.square
         { color = Yellow
         , pos = ( Config.screenMinWidth // 2, Config.screenMinHeight - 50 )
-        , size = 200
+        , width = 200
+        , height = 200
         }
     ]
         ++ View.Level.downwardsButton

@@ -8,6 +8,7 @@ import Game.Level3
 import Game.Level4
 import Html exposing (Html)
 import Set exposing (Set)
+import Game.Level5
 
 
 fromInt : Int -> Maybe (LevelDef msg)
@@ -27,6 +28,8 @@ fromInt int =
 
         5 ->
             Game.Level4.def |> Just
+        6 ->
+            Game.Level5.def |> Just
 
         _ ->
             Nothing
