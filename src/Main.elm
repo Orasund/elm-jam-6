@@ -49,7 +49,7 @@ apply { seed } generator =
 init : () -> ( Model, Cmd Msg )
 init () =
     ( { game =
-            Level.toGame 1
+            Level.toGame 6
                 |> Maybe.withDefault Game.empty
       , seed = Random.initialSeed 42
       , overlay = Nothing

@@ -7038,6 +7038,11 @@ var $author$project$Game$Level5$toHtml = function (args) {
 											height: ($author$project$Config$screenMinHeight / 2) | 0,
 											pos: _Utils_Tuple2(($author$project$Config$screenMinWidth / 4) | 0, ($author$project$Config$screenMinHeight / 4) | 0),
 											width: ($author$project$Config$screenMinWidth / 2) | 0
+										}),
+										$author$project$View$Level$reset(
+										{
+											onPress: args.reset,
+											pos: _Utils_Tuple2(100, (($author$project$Config$screenMinHeight / 2) | 0) - 100)
 										})
 									])),
 								A2(
@@ -7136,7 +7141,7 @@ var $author$project$Main$init = function (_v0) {
 			game: A2(
 				$elm$core$Maybe$withDefault,
 				$author$project$Game$empty,
-				$author$project$Level$toGame(1)),
+				$author$project$Level$toGame(6)),
 			overlay: $elm$core$Maybe$Nothing,
 			seed: $elm$random$Random$initialSeed(42),
 			transitioningArea: $elm$core$Set$empty

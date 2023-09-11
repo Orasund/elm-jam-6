@@ -135,6 +135,10 @@ toHtml args =
                     , Config.screenMinHeight // 4
                     )
                 }
+             , View.Level.reset
+                { pos = ( 100, Config.screenMinHeight // 2 - 100 )
+                , onPress = args.reset
+                }
              ]
                 |> View.Level.area
                     { transition = Set.member 0 args.transitioningArea
